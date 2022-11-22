@@ -2,7 +2,7 @@
 id: 0vvurq25uxm838qtkufz8s9
 title: Maven
 desc: ''
-updated: 1669112568103
+updated: 1669130981600
 created: 1668424982229
 ---
 ## Build Lifecycle
@@ -19,6 +19,8 @@ The build phases:
 - `deploy` - done in build environment, copies final package to remote repo for sharing with other developers and projects.
 
 To call the stage you only need to call the last build phase to be executed with `mvn {phaseName}` and it will call all default lifecycle phases before that in order.
+
+You can also run `mvn site:run` to build a site locally (usually located at localhost:8080) where you can then view Javadoc, package dependencies etc.
 
 ### POM
 [[POM Documentation | https://maven.apache.org/guides/introduction/introduction-to-the-pom.html]] <br>
