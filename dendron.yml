@@ -92,7 +92,7 @@ publishing:
     siteHierarchies:
         - root
     writeStubs: false
-    siteRootDir: docs
+    siteRootDir: notes 
     siteUrl: https://ajax-dev.github.io/
     seo:
         title: Dendron
