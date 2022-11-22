@@ -26,6 +26,9 @@ workspace:
             fsPath: .
             selfContained: true
             name: Dendron
+            remote:
+              type: git
+              url: git@github.com:Ajax-dev/ajax-dev.github.io.git
     journal:
         dailyDomain: daily
         name: journal
