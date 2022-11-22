@@ -94,6 +94,7 @@ publishing:
     writeStubs: false
     siteRootDir: docs
     siteUrl: https://ajax-dev.github.io/
+    assetsPrefix: Dendron
     seo:
         title: Dendron
         description: Personal Knowledge Space
