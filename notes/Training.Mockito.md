@@ -2,7 +2,7 @@
 id: 2ug7vsedxvwmtr1gruh8whn
 title: Mockito
 desc: ''
-updated: 1669134658830
+updated: 1669213935896
 created: 1669134192062
 ---
 ### Learning objectives
@@ -15,3 +15,4 @@ created: 1669134192062
 ### Useful Links
 - [[Mockito Best Practices | https://mestachs.wordpress.com/2012/07/09/mockito-best-practices/]]
 - [[ Purpose of mock objects | https://stackoverflow.com/questions/3622455/what-is-the-purpose-of-mock-objects/3623574#3623574]]
+- [[Hamcrest Matchers | http://hamcrest.org/JavaHamcrest/tutorial]]

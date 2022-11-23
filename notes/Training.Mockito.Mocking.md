@@ -2,7 +2,7 @@
 id: 1iw2ure3mh0sbzfivh9znc2
 title: Mocking
 desc: ''
-updated: 1669205655090
+updated: 1669213925226
 created: 1669135663121
 ---
 A *mocked* object is just a fake object pretending to be real.
@@ -39,5 +39,6 @@ We can't test on return type of method, so instead we test on what it does to ot
 Here, we're making sure the method "*amend*" is called with the given arguments.
 In the example, we wrapped the arguments in "`eq`", meaning a given argument must equal it to count as calling that method.
 We can specify many complex criteria to 'match' valid arguments against, **using Hamcrest Matcher**.
+[[Hamcrest Matchers | http://hamcrest.org/JavaHamcrest/tutorial]]
 
 If you import Mockito classes and do them statically it saves you using *Mockito.mock()* and can instead just use *mock()*.
