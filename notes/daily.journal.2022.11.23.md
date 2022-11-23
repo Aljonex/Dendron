@@ -1,9 +1,9 @@
 ---
-id: 41qgs3vg96gk8d0mxjppp7v
-title: '2022-11-22'
+id: 6u3u4rjmr4aks9ercpe6k48
+title: '2022-11-23'
 desc: ''
-updated: 1669236823687
-created: 1669109414058
+updated: 1669236942914
+created: 1669236834333
 traitIds:
   - journalNote
 ---
@@ -18,44 +18,38 @@ Based on the journaling method created by Intelligent Change:
 
 ## Morning
 
-Spent first 30 mins talking to Jack Price (who will most likely be my line manager). 
-Generally chatted about end game work here and what goes on, what makes a good vs bad programmer, overall consensus was:
-- Intelligence is good (not the *most important*)
-- Very effective problem solvers
-- People who are good at learning (not necessarily good learners)
+Cooked shakshuka for me mum and dad.
 
 ### Gratitude
 
 I am grateful for:
 
-1. An amazing weekend away
-2. New friends made (Mario, Julian, Annika, etc.)
-3. My overall health and new job
+1. Having breakfast and quality time with mum and dad.
+2. Being able to go to the gym
+3. The new job I have
 
 ### What would make today great?
 
-1. Finishing the next tutorial and making effective notes on what I did last Mon-Weds
-2. Feeling healthier throughout the day
-3. Going to the gym
+1. NA
+2. NA
+3. NA
 
 ### Daily affirmations
 
 I am...
-- Strong
-- Capable
-- Smart
-- Likeable
-- Loved
-- Able to handle whatever life throws at me
 
 ## Evening
 
 <!-- Fill out this section before going to sleep, reflecting on your day -->
 
+My day was excellent although felt a little slow paced and a bit of an overload of information.
+Managed to start my work on a potential e-commerce store for Marcus using NextJS, TailwindCSS and Stripe, currently sticking with JavaScript although TypeScript is apparently more powerful. 
+But all JS is valid tsx so its a great starting point.
+
 ### Amazing things that happened today
 
-1. Got asked to do IY talk (industrial year) for potential candidates tomorrow
-2. 
+1.
+2.
 3.
 
 ### How could I have made today even better?
