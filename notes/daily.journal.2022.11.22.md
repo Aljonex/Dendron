@@ -2,7 +2,7 @@
 id: 41qgs3vg96gk8d0mxjppp7v
 title: '2022-11-22'
 desc: ''
-updated: 1669109737501
+updated: 1669156811932
 created: 1669109414058
 traitIds:
   - journalNote
@@ -54,7 +54,7 @@ I am...
 
 ### Amazing things that happened today
 
-1.
+1. Got asked to do IY talk (industrial year) for potential candidates tomorrow
 2.
 3.
 
