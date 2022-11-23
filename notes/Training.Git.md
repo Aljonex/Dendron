@@ -2,7 +2,7 @@
 id: ec0988jrr188lfwgs6i2tr1
 title: Git
 desc: ''
-updated: 1668180750862
+updated: 1669194309899
 created: 1668168528813
 ---
 ## Learning Objectives
@@ -95,3 +95,13 @@ With multiple things stashed you can instead use `git stash apply stashName`.
 #### Cherry picking
 `git cherry-pick` command can take the change from a single commit and try and re-introduce it to whatever branch you're currently working on.
 Simply `git cherry-pick codeOfCommit` where the code is like the above (i.e. *2dd380fdb*).
+
+
+#### Git renaming commits of whole branch 
+To amend last commit `git commit --amend`.
+To rewrite a range of commits, it is also easy using the `filter-branch` command:
+
+`git filter-branch --msg-filter 'printf "THE_PREFIX " && cat' {firstCommit}..HEAD(or{CommitToGetTo})`
+
+This doesn't overwrite any timestamps or anything and just appends that message.
+For example:

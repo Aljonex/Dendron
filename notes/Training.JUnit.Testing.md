@@ -2,7 +2,7 @@
 id: kzdodzwjcjyjrdbwqdjhyfv
 title: Testing
 desc: ''
-updated: 1668444471017
+updated: 1669203997459
 created: 1668438249320
 ---
 This page will cover the first 3 learning objectives of the above page.
@@ -66,3 +66,33 @@ Refactor --> Write
 TDD is neither about "*testing*" nor "*design*". 
 It also doesn't mean "write some tests, then build a system that passes", and it doesn't mean "do lots of testing".
 TDD is primarily a specification technique, ensures that source code is thoroughly tested.
+
+## JUnit Object Instantiation
+[[Martin Fowler JUnit New Instance | https://martinfowler.com/bliki/JunitNewInstance.html]]
+```Java
+import junit.framework.*;
+import java.util.*;
+
+public class Tester extends TestCase {
+  public Tester(String name) {super(name);}
+  private List list = new ArrayList();
+  public void testFirst() {
+    list.add("one");
+    assertEquals(1, list.size());
+  }
+  public void testSecond() {
+    assertEquals(0, list.size());
+  }
+}
+```
+
+Both of these tests pass regardless of order because JUnit creates *two* instances of Tester, one for each test method. 
+This is a conscious design decision, one key principle is that of **isolation** - *no test should ever do anything that would cause other tests to fail*.
+
+The advantages of isolation are:
+- Any combination of tests can be run in any order with the same results
+- You never have a situation where if one test fails the cause is another test and its writing
+- If one test fails you don't need to worry about debris causing other tests to fail
+
+This is why JUnit provides other mechanisms to support isolation, in particular *setUp* and *tearDown* methods to run at the beginning and end of each test method. 
+By making these methods static, you save duplication of code and so instantiation should occur in the before methods.
