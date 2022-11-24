@@ -2,7 +2,7 @@
 id: jqqvnassvltymgaxgbkagqw
 title: BestPractice
 desc: ''
-updated: 1669217803551
+updated: 1669282749360
 created: 1669206147657
 ---
 Discouraged ugly imports
