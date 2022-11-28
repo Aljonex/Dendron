@@ -2,7 +2,7 @@
 id: 1iw2ure3mh0sbzfivh9znc2
 title: Mocking
 desc: ''
-updated: 1669213925226
+updated: 1669379706710
 created: 1669135663121
 ---
 A *mocked* object is just a fake object pretending to be real.
@@ -42,3 +42,5 @@ We can specify many complex criteria to 'match' valid arguments against, **using
 [[Hamcrest Matchers | http://hamcrest.org/JavaHamcrest/tutorial]]
 
 If you import Mockito classes and do them statically it saves you using *Mockito.mock()* and can instead just use *mock()*.
+
+

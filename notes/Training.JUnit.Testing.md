@@ -2,7 +2,7 @@
 id: kzdodzwjcjyjrdbwqdjhyfv
 title: Testing
 desc: ''
-updated: 1669203997459
+updated: 1669386208023
 created: 1668438249320
 ---
 This page will cover the first 3 learning objectives of the above page.
@@ -43,6 +43,8 @@ This example is for web apps.
 - Performance testing
 - Compatibility testing
 - Security testing
+
+![](2022-11-25-14-23-22.png)
 
 [[Web app testing | https://www.browserstack.com/guide/web-application-testing-checklist]]
 

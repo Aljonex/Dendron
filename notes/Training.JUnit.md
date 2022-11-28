@@ -2,7 +2,7 @@
 id: 17rg7xlxcuo0n1iztgoejlo
 title: JUnit
 desc: ''
-updated: 1669134616326
+updated: 1669380259296
 created: 1668426100214
 ---
 > Learning Objectives
@@ -52,3 +52,4 @@ See [[Training.JUnit.JUnitBasics]] for examples.
 - [[ WFS wiki: JUnit | https://confluence.apak.com/live/display/WIKI/JUnit]]
 - [[ JUnit4 to 5 | https://www.baeldung.com/junit-5-migration]]
 - [[Best Practices | https://howtodoinjava.com/best-practices/unit-testing-best-practices-junit-reference-guide/]]
+- [[Baeldung Best Practices | https://www.baeldung.com/java-unit-testing-best-practices]]
