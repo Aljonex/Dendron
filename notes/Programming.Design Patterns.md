@@ -2,7 +2,7 @@
 id: jo6ifjsvacijbu5j2pvtr1m
 title: Design Patterns
 desc: ''
-updated: 1669738462015
+updated: 1669738550284
 created: 1669736832417
 ---
 *A general repeatable solution to commonly occurring problem in software design.
@@ -34,3 +34,7 @@ These are about Class and Object composition, these design patterns use inherita
 These design patterns are about Class's objects communication, they are those patterns that are concerned with inter-object communication.
 
 [[See here | https://sourcemaking.com/design_patterns]]
+
+## AntiPatterns
+Common defective processes and implementations in organisations.
+Also a commonly occurring solution to a problem that generates decidedly negative consequences, it may be the result of a developer not knowing any better or having applied a good pattern in the wrong context.

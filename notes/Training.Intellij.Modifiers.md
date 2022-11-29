@@ -2,10 +2,10 @@
 id: 2szyi8edbxk8l05x2kxhl5k
 title: Modifiers
 desc: ''
-updated: 1668423565459
+updated: 1669739164337
 created: 1668420806765
 ---
-
+[[Oracle docs | https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html]]
 ## Keyword modifiers
 The class modifier overwrites the inner modifiers.
 
@@ -58,3 +58,11 @@ public class Car {
 - **Class**: Can't have this but by default a java class is package private
 - **Method**: Accessible in same package and subclasses.
 - **Attribute**: Accessible in same package and subclasses.
+
+### Final
+If blank can only be initialised in the constructor.
+Cannot change the value of it otherwise, it is constant and so the naming convention is `ALL_CAPS_WITH_UNDERSCORES`.
+
+Final methods cannot be overridden.
+
+Final classes cannot be extended.
