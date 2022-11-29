@@ -2,7 +2,7 @@
 id: 2ug7vsedxvwmtr1gruh8whn
 title: Mockito
 desc: ''
-updated: 1669283987885
+updated: 1669714473006
 created: 1669134192062
 ---
 ### Learning objectives
@@ -11,6 +11,18 @@ created: 1669134192062
 - How to use mocks in [[JUnit | Training.JUnit]] tests?
 - What is a spy? Why is it useful?
 - [[Training.Mockito.BestPractice]]
+
+**Mocking** = simulating external dependencies of code being tested, with either fake data or fake interactions.
+
+When to mock?<br>
+Pros:
+- Less setup (doesn't come with dependencies)
+- No cleanup - not saving anything
+- Faster
+- Isolated - tests pass without need for any dependencies to work
+
+Cons:
+- Less confidence - not using real interactions
 
 ### Spy vs Mock
 When *Mockito* creates a mock - it does from the Class of a Type, not from the actual instance.

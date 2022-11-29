@@ -2,7 +2,7 @@
 id: 2rgyftzf1epf699xi09wibl
 title: Tut1-5
 desc: ''
-updated: 1669205878573
+updated: 1669732215971
 created: 1669205701466
 ---
 ## All learning objectives
@@ -30,3 +30,4 @@ created: 1669205701466
 - How to mock a Java object?
 - How to use mocks in [[JUnit | Training.JUnit]] tests?
 - What is a spy? Why is it useful?
+- Difference between test double objects
