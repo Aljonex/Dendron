@@ -2,7 +2,7 @@
 id: 2rgyftzf1epf699xi09wibl
 title: Tut1-5
 desc: ''
-updated: 1669732215971
+updated: 1669733957320
 created: 1669205701466
 ---
 ## All learning objectives
@@ -11,11 +11,13 @@ created: 1669205701466
 - How to use Git Bash
 - Simple git commands
 - Git Branching structure
+
 ### Project Setup #2
 - Maven Dependency Management + Project Building Basics
 - Intellij for editing class in a project
 - What is BigDecimal and why use [[Training.Intellij.BigDecimal]]
 - [[Training.Intellij.Modifiers]]
+
 ### JUnit #3
 - Different kinds of test: *Unit, Integration, End to End*
 - Differences between automated and manual testing
@@ -25,9 +27,15 @@ created: 1669205701466
 - How to create a test class
 - How to test client Configuration
 - How to calculate Code Coverage and why it is useful
+
 ### Mocking and Mockito #4
 - What is mocking? Why is it useful?
 - How to mock a Java object?
 - How to use mocks in [[JUnit | Training.JUnit]] tests?
 - What is a spy? Why is it useful?
 - Difference between test double objects
+
+### Logging #5
+- Differences between log4j and slf4j
+- Basics of logging framework configuration
+- What logging levels are
