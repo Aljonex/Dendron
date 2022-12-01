@@ -2,7 +2,7 @@
 id: 2rgyftzf1epf699xi09wibl
 title: Tut1-5
 desc: ''
-updated: 1669825657242
+updated: 1669908366758
 created: 1669205701466
 ---
 ## All learning objectives
@@ -16,7 +16,7 @@ created: 1669205701466
 - Maven Dependency Management + Project Building Basics
 - Intellij for editing class in a project
 - What is BigDecimal and why use [[Training.Intellij.BigDecimal]]
-- [[Training.Intellij.Modifiers]] : **static** lives at the top of the file
+- [[Training.Intellij.Modifiers]] 
 
 ### JUnit #3
 - Different kinds of test: *Unit, Integration, End to End*
@@ -45,5 +45,6 @@ Don't use spies because they're fragile and cause side effects, unless you have 
 - Basics of logging framework configuration
 - What logging levels are
 
-## Extras
+## Learned from PR
 - Composition: A means of avoiding inheritance, involves a constructor instantiating the object that would have been extended. Make sure to make use of polymorphism i.e. if object you wanted was implementing an interface, use that interface to future proof for extra extensions.
+- **Static** : variables always at the top
