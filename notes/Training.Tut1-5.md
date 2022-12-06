@@ -2,7 +2,7 @@
 id: 2rgyftzf1epf699xi09wibl
 title: Tut1-5
 desc: ''
-updated: 1670263766430
+updated: 1670338629180
 created: 1669205701466
 ---
 ## All learning objectives
@@ -88,7 +88,7 @@ public class CAPExtraValueCalculatorTest {
     ...
 }
 ```
-- @BeforeClass and @AfterClass annotations are for heavier operations like database setup and teardown, not for variable setting
+- @BeforeClass and @AfterClass annotations are for heavier operations like database setup and teardown, not for variable setting - [[ Why they are static | https://stackoverflow.com/questions/1052577/why-must-junits-fixturesetup-be-static]]
 - No `this.` annotation in getters
 
 Some useful imports for testing:
@@ -109,3 +109,8 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 ```
+
+- Dummy  → A double which is passed through test methods but not actually used
+- Stub → A double which provides a pre-specified to answer to calls made during the test 
+- Mock → A double which can be programmed with expectations on how it will be called and other interactions 
+- Spy → A double which can record information on how it was called
