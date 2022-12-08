@@ -2,7 +2,7 @@
 id: gtorrjrc5ac2sb88bvcaz8l
 title: Runners
 desc: ''
-updated: 1670238698002
+updated: 1670499835929
 created: 1669380277630
 ---
 In order to specify a custom runner, use the `@RunWith` annotation.
@@ -29,3 +29,5 @@ public classTest {
     }
 }
 ```
+- If you use `MockitoJUnitRunner.class` mocks are initialised after initialiser blocks, constructors, and `@Rule`s and before any other `@Before`s as defined in `BlockJUnit4ClassRunner.class`
+- If you use `MockitoRule`, mocks are initialised before `@Before` methods but not in any order compared to other `@Rule`s unless chained with `RuleChain`

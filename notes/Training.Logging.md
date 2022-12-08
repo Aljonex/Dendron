@@ -2,7 +2,7 @@
 id: oji664drtxpoum2bxu4gjo3
 title: Logging
 desc: ''
-updated: 1669731610693
+updated: 1670515699505
 created: 1669629977276
 ---
 Usually most use `System.out.println()` methods to output logging messages to the terminal.
@@ -96,3 +96,5 @@ There are some additions like:
     </Loggers>
 </Configuration>
 ```
+
+[[Log42j pattern layout | https://www.tutorialspoint.com/log4j/log4j_patternlayout.htm]]
