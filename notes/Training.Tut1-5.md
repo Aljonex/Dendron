@@ -2,7 +2,7 @@
 id: 2rgyftzf1epf699xi09wibl
 title: Tut1-5
 desc: ''
-updated: 1670338629180
+updated: 1670931770617
 created: 1669205701466
 ---
 ## All learning objectives
@@ -34,7 +34,7 @@ Generally setup, teardown, and test specific methods live at the top of the suit
 ### Mocking and Mockito #4
 - What is mocking? Why is it useful?
 - How to mock a Java object?
-- How to use mocks in [[JUnit | Training.JUnit]] tests?
+- How to use mocks in [[ JUnit | Training.JUnit ]] tests?
 - What is a spy? Why is it useful?
 - Difference between test double objects
 
@@ -43,7 +43,7 @@ Don't use spies because they're fragile and cause side effects, unless you have 
 ### Logging #5
 - Differences between log4j and slf4j
 - Basics of logging framework configuration
-- What logging levels are
+- What [[ logging | Training.Logging]] levels are
 
 ## Learned from PR
 - Composition: A means of avoiding inheritance, involves a constructor instantiating the object that would have been extended. Make sure to make use of polymorphism i.e. if object you wanted was implementing an interface, use that interface to future proof for extra extensions.

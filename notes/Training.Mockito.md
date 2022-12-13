@@ -2,7 +2,7 @@
 id: 2ug7vsedxvwmtr1gruh8whn
 title: Mockito
 desc: ''
-updated: 1669714473006
+updated: 1670948612438
 created: 1669134192062
 ---
 ### Learning objectives
@@ -54,3 +54,4 @@ public void whenCreateSpy_thenCreate() {
 - [[ Purpose of mock objects | https://stackoverflow.com/questions/3622455/what-is-the-purpose-of-mock-objects/3623574#3623574]]
 - [[Hamcrest Matchers | http://hamcrest.org/JavaHamcrest/tutorial]]
 - [[Spy vs Mock | https://stackoverflow.com/questions/15052984/what-is-the-difference-between-mocking-and-spying-when-using-mockito]]
+- [[ Mockito Youtube | https://www.youtube.com/watch?v=d2KwvXQgQx4&list=PLxV9wAh_1XucPEB0WZS5X1loo4d7yWavG]]
