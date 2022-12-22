@@ -2,7 +2,7 @@
 id: v0ohtlg0wqyq2b74eulyw5z
 title: Spring
 desc: ''
-updated: 1670514186028
+updated: 1671552234851
 created: 1670413716922
 ---
 > Learning objectives
@@ -10,6 +10,9 @@ created: 1670413716922
 - Why do we like it?
 - How does Spring do it?
 - Why does this make design and testing easier?
+
+Spring has a core feature of their framework, an *Inversion of Control* container (IoC), that can construct object of selected class and inject dependency objects via constructor, property, or function at execution time and dispose of them at a suitable time. 
+This helps with creation and management of objects manually.
 
 In a Spring application, an *application context* loads bean definitions and wires them together.
 The application context is responsible for creation of and wiring of objects that make the application.

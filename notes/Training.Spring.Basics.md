@@ -2,7 +2,7 @@
 id: znjdgx39lqrusio5f7uu1vd
 title: Basics
 desc: ''
-updated: 1670431215268
+updated: 1671535683109
 created: 1670423505220
 ---
 ### Spring Book Chapter 1
@@ -83,24 +83,7 @@ public class SlayDragonQuest implements Quest {
 }
 ```
 
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-    <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
-        
-        <bean id="knight" class="com.springinaction.knights.BraveKnight">
-            <constructor-arg ref="quest" />
-        </bean>
-        <bean id="quest" class="com.springinaction.knights.SlayDragonQuest">
-            <constructor-arg value="#{T(System).out}" />
-        </bean>
-    </beans>
-```
-The classes are declared as **beans** in Spring and in the case of `BraveKnight` bean, its *constructed, passing a reference to SlayDragonQuest bean as a constructor argument*
-
-The `SlayDragonQuest` bean declaration uses the *Spring Expression language* to pass `System.out` (which is a PrintStream) to `SlayDragonQuest`'s constructor.
+![[Training.Spring.Beans#basic]]
 
 Here is the java equivalent to the above XML.
 
