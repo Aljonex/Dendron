@@ -2,7 +2,7 @@
 id: 1hiprj6ql6x1q9hwj3g5aam
 title: Hibernate
 desc: ''
-updated: 1671721370834
+updated: 1671724422595
 created: 1670861066022
 ---
 Hibernate is an ORM (Object-Relational Mapping) tool, provides a framework to allow OOP to a relational database.
@@ -102,6 +102,13 @@ List.result = query.list();
 You can use `setParameter`, `setString`, `setProperties` to discover the data type, tell the parameter that its a string, or pass an object in (Hibernate check's its properties to match with the colon parameter).
 
 ### Use of Projections
+Projections describe which columns you select from database and which form Hibernate provides them to you. 
+In a JPQLquery its everything between *SELECT* and *FROM* keywords.
+
+JPA and Hibernate support 3 groups of projections:
+1. Scalar values
+2. Entities
+3. DTOs
 
 ### Transience
 
