@@ -2,7 +2,7 @@
 id: 1hiprj6ql6x1q9hwj3g5aam
 title: Hibernate
 desc: ''
-updated: 1671724422595
+updated: 1672933645829
 created: 1670861066022
 ---
 Hibernate is an ORM (Object-Relational Mapping) tool, provides a framework to allow OOP to a relational database.
@@ -149,3 +149,8 @@ services:
       - pgadmin_vol:/certs/server.key
       - pgadmin_vol:/pgadmin4/servers.json
 ```
+
+Useful resources:
+- **Java Persistence with Hibernate** Second Edition by *Christian Bauer, Gavin King, Gary Gregory*
+- [[Hibernate 4.3 User Manual | https://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html/]]
+- [[Hibernate 4.3 Javadoc | https://docs.jboss.org/hibernate/orm/4.3/javadocs/]]

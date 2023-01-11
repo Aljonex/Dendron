@@ -2,7 +2,7 @@
 id: t6unaqxqmwpxmi5fz529xis
 title: XML Parsers
 desc: ''
-updated: 1672407997765
+updated: 1672919295531
 created: 1672404390746
 ---
 JAXB is *Java Architecture for XML Binding* and allows a fast and convenient way to **marshal** (write) Java Objects to XML and **unmarshal** (read) XML into objects. 
@@ -50,7 +50,21 @@ public class Book {
 ```
 It's extremely simple to marshal and unmarshal one object with children, but if you want to be able to effectively do it for potential lists of objects it becomes slightly complex.
 Thinking about the PriceRecord, PriceBand (contained in record) 
-> Note:<br>
+> JAXB:<br>
 [[JAXB intro | https://www.javacodegeeks.com/2013/02/jaxb-tutorial-getting-started.html]] <br>
 [[Tutorial around JAXB | https://www.vogella.com/tutorials/JAXB/article.html#jaxb]]<br>
 [[Another tutorial showing multiple objects | https://howtodoinjava.com/jaxb/jaxb-exmaple-marshalling-and-unmarshalling-list-or-set-of-objects/]]
+<br>
+
+> STaX:<br>
+[[STaX writing XML | https://mkyong.com/java/how-to-write-xml-file-in-java-stax-writer/]]
+<br>
+[[STaX reading XML | https://mkyong.com/java/how-to-read-xml-file-in-java-stax-parser/]]
+<br>
+[[STaX Oracle Docs | https://docs.oracle.com/javase/tutorial/jaxp/stax/why.html]]
+
+#### Dom4j
+- XPath stands for XML Path Language
+- XPath uses "path like" syntax to identifyand navigate nodes in an XML document
+- XPath contains over 200 built-in functions
+- XPath is a major element in the XSLT standard and a W3C recommendation
