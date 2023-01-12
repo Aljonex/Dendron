@@ -2,7 +2,7 @@
 id: 28is9yzjhiyxa7shoa8i9d0
 title: Tut6-8
 desc: ''
-updated: 1673439186239
+updated: 1673518932865
 created: 1670413655191
 ---
 ## All learning objectives
@@ -109,14 +109,50 @@ Above is an example of projection where choosing all unique combinations of the 
 
 
 ### Topics from previous quizzes
-- Autowired vs Resource annotation
-- BOM
-- Property vs constructor injection
-- Normalisation
-- Lazy loading in transactions
-- Table vs Record
-- Foreign key
-- Database transaction
-- Optimistic locking
-- Cascading
-- Alias
+- Autowired vs Resource annotation<br>
+`@Resource` means get a known resource *by its name*, name extracted by annotated setter or field or name-param in the `spring-context.xml`.<br> 
+`@Autowired` tries to find a suitable component based on type, when `@Resource` can't find by name then it falls back on `@Autowired`.
+- BOM<br>
+Special kind of POM, the BOM (Bill of Materials) that controls the versions of project dependencies and provides a central place to define and update those versions.
+- Property vs constructor injection<br>
+Core difference is that constructor injection enforces required dependencies, however property (setter) injection can do this by using the `@Required` tag on the setter(s) of the relevant class.
+- Normalisation<br>
+The process of reorganising the structure of object schema so that classes are more cohesive with minimal coupling
+- Lazy loading vs Eager in transactions<br>
+*Eager* initialises data on the spot whereas *Lazy* defers the initialisation as long as possible
+- Table vs Record<br>
+A table holds *records* (rows) and *fields* (columns)
+- Foreign key<br>
+A column/columns (set of attributes) in one table that refers to unique data (usually primary key) of another table, these keys link together two or more tables in a relational database
+- Database transaction<br>
+Is a unit of work you want to treat as "a whole", which has to either *complete* or *rollback*, all of the steps must be completed before the transaction is complete.
+- Optimistic locking <br>
+To be used there must be a property with the `@Version` annotation in an entity, before the transaction makes an update it checks against the entity's version and if this has changed the transaction doesn't complete and throws an exception
+- Cascading (`@OneToMany` etc)<br>
+Cascading is a way of achieving the dependency of entity relationships (i.e. without a PriceRecord a PriceBand doesn't have any relevant meaning), there are many types **ALL, PERSIST, MERGE, REMOVE, REFRESH, DETACH**, all propagates all options (including hibernate specific from parent to child), the `@OneToMany` annotation can have `cascade=CascadeType.<type>, fetch=FetchType.<type>` as parameters.
+- Alias<br>
+Is useful as Java objects and classes are the only thing case sensitive in queries so if you rename them as all lower, its less likely you'll make a mistake
+- `@Transactional`<br>
+Annotation to provide ability to declaratively control transaction boundaries on CDI managed beans, its metadata applied to make a method or methods in a class transactional and therefore roll back when they fail
+- Cherry picking<br>
+Enables a commit to be picked and appended to current working HEAD, bug hotfixes etc. Can edit commit message with `-edit`
+- SRP<br>
+Part of SOLID design principles:
+  - **S** - Single responsibility principle, every class has one responsibility
+  - **O** - Open closed principle, entities open for extension but closed for modification
+  - **L** - Liskov substitution principle, (design by contract) functions that point or reference to base classes need to be able to use derived class objects without knowing
+  - **I** - Interface segregation principle, clients shouldn't have to depend on interfaces they don't use
+  - **D** - Dependency Inversion principle, depend upon abstractions not concretions
+- Jenkins
+- Dependency resolution/storage<br>
+`.m2` folder stores dependencies resolved through apak repo so that call to internet isn't necessary every time
+- access modifier: protected, package-private<br>
+Protected is any children classes can use (even outside package), package-private is only things in package can use
+- Anonymous classes<br>
+Make code concise, can declare and instantiate class at the same time, like local classes but without a name.
+- verify()<br>
+Check certain behaviours happened as intended, can check number of method invocations
+- Spies<br>
+Unlike mocks which create bare bones instance with no implementation, spies wrap and existing instance and behave the same way as a normal instance but tracks all interactions
+- Conjunction vs disjunction<br>
+Disjunction is an OR expression, Conjunction is an AND expression (in the WHERE clause respectively)
