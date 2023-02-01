@@ -1,28 +1,10 @@
 ---
-id: hpshftmtgv63cmozfu7fajq
+id: tkc0vfgpdrgte01a2ph6g2i
 title: Docker
 desc: 'A notes page revolving around Docker as a tool and hopefully leading into the progression of information about Kubernetes, Helm, then Argo'
-updated: 1671621936965
-created: 1671621660756
+updated: 1675253755642
+created: 1675246965026
 ---
-Docker is a container tool that is open platform for *developing, shipping, and running applications* in a way that you want. 
-These are set up in containers which have a `docker-compose.yml` which defines the services that make it up.
-The app environment is defined in a `Dockerfile` so it can be reproduced anywhere.
-
-### Docker build
-Builds or rebuilds services, can use `docker build` or `docker-compose build`
-
-### Docker compose
-`docker-compose up` creates and starts containers
-
-`docker-compose down` stops and removes containers, networks
-
-### Docker volume
-`docker volume` command
-
-Can add options like ` list`, to show all of the volumes.
-`rm <volName>` to remove the volume.
-
 Docker allows developers to make use of *containers* to **Build, Share, & Run** applications where containers are:
 > The packaging of software into standardised units for development, shipment, deployment. Making other devs lives easier as you are quickly able to deploy a application with default configuration already achieved removing time taken to set up and configure the same thing multiple times. Similar to saving a `venv` and using it to aid deployment of python apps you can package all code and dependencies up, containers *isolate* software from its environment and ensure that it works in a uniform manner despite differences for instance between development and staging.
 

@@ -2,7 +2,7 @@
 id: 28is9yzjhiyxa7shoa8i9d0
 title: Tut6-8
 desc: ''
-updated: 1673518932865
+updated: 1673535704266
 created: 1670413655191
 ---
 ## All learning objectives
@@ -61,7 +61,7 @@ System.out.println(list.get(0));
 - *What SQL binding is and how to use it in HQL*<br>
 SQL binding is a way to dynamically inject a variable into an HQL query (it is referred to as a *bind variable*), the named placeholder is preceded by a colon and the actual value is substitued at runtime using the `setParameter()` method, without binding we have String concatenation like this (less readable):<br>
 `String hql = "from Student student where student.studentName = '" + studentName+ "'";`<br>
-You can have named parameter binding or positional parameter (ignore the second as is less common and less user friendly)
+You can have named parameter binding or positional parameter (ignore the positional as is less common and less user friendly)
 ```Java
 String hql = "from Student student where student.rollNumber= :rollNumber";
 Query query = session.createQuery(hql);
