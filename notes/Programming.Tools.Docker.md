@@ -2,9 +2,10 @@
 id: hpshftmtgv63cmozfu7fajq
 title: Docker
 desc: 'A notes page revolving around Docker as a tool and hopefully leading into the progression of information about Kubernetes, Helm, then Argo'
-updated: 1671621936965
+updated: 1675441793310
 created: 1671621660756
 ---
+
 Docker is a container tool that is open platform for *developing, shipping, and running applications* in a way that you want. 
 These are set up in containers which have a `docker-compose.yml` which defines the services that make it up.
 The app environment is defined in a `Dockerfile` so it can be reproduced anywhere.
@@ -44,5 +45,3 @@ It allows generalisation so applications can run natively on any machine and tak
 This leads us into Kubernetes, like `docker-compose` it is also a framework for container orchestration but the core difference is that *Kubernetes* runs containers across multiple computers (virtual or physical) whereas *Docker Compose* runs containers on a single host machine.
 
 
-### Getting started app
-`docker build -t getting-started` gets errors when running on corporate proxies ([[as of Dec 2 2022 | https://github.com/docker/getting-started/issues/56]]). Switching to *SA Personal* from *SGS Staff* fixed this.
