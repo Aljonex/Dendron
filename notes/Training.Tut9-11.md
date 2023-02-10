@@ -2,7 +2,7 @@
 id: sbp845l9og1c7wpen76izp1
 title: Tut9-11
 desc: ''
-updated: 1675247145083
+updated: 1675953980494
 created: 1675180096057
 ---
 ### Tutorial 9
@@ -43,3 +43,25 @@ Also creating a logical order for links and forms to allow a visitor using the t
     2. Buttons and Links
     3. Titles and headings
     4. Data tables
+
+### 6-8 Missing bits
+- **Spy** - wraps an existing instance and behaves the same but tracks interactions
+- **Property & Constructor Injection** - Property injection is better for switching things at runtime, whereas constructor injection is better for enforcing dependencies.
+- **`@Qualifier`** - Can be used to solve multiple beans of same type when using autowired, is the same as using the `@Resource` with the *name* parameter.
+- **Sequences** - something that follows a pattern or a rule, in databases allows automatic generation of values such as check numbers. Good for generating unique key values.
+- **Normalisation** - for elimination of redundancy of data, its for removing duplicates from tables and expanding to more tables, but too much normalisation causes performance issues. Library example, want a record for each book, but also probably want each time a book is taken out and returned, but these would go into other tables.
+- **Optimistic and Pessimistic Locking** - optimistic locking is where you take note of a version number and check its unchanged before writing the record, whereas pessimistic locking is the locking of a record for exclusive use until finished with it
+- **`@XmlID`** - another way of declaring something as an ID 
+- **Criteria benefits** - isn't vulnerable to SQL injections as queries are dynamically generated, more scalable, changeable and readable that an HQL query, because of object oriented API, errors can be detected at compile time.
+- **Criteria alias** - a way of renaming projections and making them more reusable
+- **Aggregate functions** - calculate the final result using property values of all objects satisfying the given query criteria (*min, max, sum, avg, count*)
+- **Detached Criteria** - a way of creating a query without the session, then you can reuse searches regardless of session.
+
+
+#### Notes
+Mocks extend a class and make an instance of the extension, whereas Spy wraps the instance and then by default uses normal methods but through stubbing can override.
+Pessimistic locking is better in highly critical systems and maybe banking, then there is pessimistic plus which locks a whole table.
+*Create alias* in hibernate creates a join and gives it a name for a join.
+*CSRF - Cross site request forgery* - token given out 
+XSS - cross site scripting, injecting malicious code that gets stored in the website
+<br> Session management - last logged in, how long logged in, a way of identifying who you are

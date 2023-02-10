@@ -2,10 +2,10 @@
 id: hpshftmtgv63cmozfu7fajq
 title: Docker
 desc: 'A notes page revolving around Docker as a tool and hopefully leading into the progression of information about Kubernetes, Helm, then Argo'
-updated: 1675784539639
+updated: 1675855535078
 created: 1671621660756
 ---
-
+### Docker
 Docker is a container tool that is open platform for *developing, shipping, and running applications* in a way that you want. 
 These are set up in containers which have a `docker-compose.yml` which defines the services that make it up.
 The app environment is defined in a `Dockerfile` so it can be reproduced anywhere.
