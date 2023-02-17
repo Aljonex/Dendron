@@ -2,7 +2,7 @@
 id: hzpowz01h8f3fx6tvawz7kc
 title: Kubernetes
 desc: ''
-updated: 1676049021608
+updated: 1676645818483
 created: 1675855568297
 ---
 ## Kubernetes
@@ -114,6 +114,70 @@ app-pod   1/1     Running   0          10s
 ```
 
 ### Services
+
+Every Pod in a cluster gets its own unique cluster-wide IP address, so you don't need to explicitly link Pods and almost never deal with mapping container ports to host ports.
+Creating a clean, backwards-compatible model where Pods can be treated much like VMs or physical hosts from perspectives of port allocation, naming, service discovery, load balancing... etc.
+
+A *service* is an abstract way to expose an application running over a set of Pods as a network service. 
+Pods are non-permanent resources so are created and destroyed to match desired cluster state.
+In *Kubernetes* a service is a **REST** object like a Pod, you can `POST` a service definition to the API server to create a new instance.
+
+
+### Ingress
+Is effectively meant to do the `kubectl port-forward <resource>/<resource-name> <localport>:<containerPort>` legwork, but doesn't for some stupid reason.
+
+![](pics/deployment-service-ingress-linkup.jpg)
+[[Relation of deployment service and ingress | https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb]]
+
+Ingress resources MUST always have a controller, with Rancher desktop this defaults to *traefik* [[traefik ingress docs | https://doc.traefik.io/traefik/providers/kubernetes-ingress/]]
+
+### Namespaces
+Are a great way to organise clumps of clustered things together so you don't get cluttered kubectl outputs.
+To create a new namespace `kubectl create namespace <name>` and can see all namespaces with `kubectl get namespaces`.
+These are useful as you can limit resources on given namespaces, but when trying to find any of the resources you must add the flag `-n=<namespace-name>`.
+
+```bash
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: DATA+OMITTED
+    server: https://192.168.184.120:6443
+  name: rancher-desktop
+contexts:
+- context:
+    cluster: rancher-desktop
+    user: rancher-desktop
+  name: rancher-desktop
+current-context: rancher-desktop
+kind: Config
+preferences: {}
+users:
+- name: rancher-desktop
+  user:
+    client-certificate-data: DATA+OMITTED
+    client-key-data: DATA+OMITTED
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl change namespace
+error: unknown command "change" for "kubectl"
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-context
+error: unknown command "get-context"
+See 'kubectl config -h' for help and examples
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get -context
+error: unknown shorthand flag: 'c' in -context
+See 'kubectl config --help' for usage.
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-contexts
+CURRENT   NAME              CLUSTER           AUTHINFO          NAMESPACE
+*         rancher-desktop   rancher-desktop   rancher-desktop
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config set-contexts --current --namespace=tomcat
+error: unknown flag: --current
+See 'kubectl config --help' for usage.
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config set-context --current --namespace=tomcat
+Context "rancher-desktop" modified.
+alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-contexts
+CURRENT   NAME              CLUSTER           AUTHINFO          NAMESPACE
+*         rancher-desktop   rancher-desktop   rancher-desktop   tomcat
+```
+
 ### Data Storage
 ### Configuration and Secrets
 

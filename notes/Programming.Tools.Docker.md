@@ -2,7 +2,7 @@
 id: hpshftmtgv63cmozfu7fajq
 title: Docker
 desc: 'A notes page revolving around Docker as a tool and hopefully leading into the progression of information about Kubernetes, Helm, then Argo'
-updated: 1675855535078
+updated: 1676644175446
 created: 1671621660756
 ---
 ### Docker
@@ -123,3 +123,18 @@ EXPOSE 8081
 CMD ["catalina.sh", "run"]
 ```
 Something to do with copying from the src into the folder in the container as src doesn't have META-INF.
+
+### Local Registry
+This needs to be done for when using kubernetes unless you have pushed your custom images to the DockerHub (also a viable option).
+
+So:
+1. Start local registry container:<br> `docker run -d -p 5000:5000 --restart=always --name registry registry:2`
+2. Do `docker images` to find out repository and tag of local image, then create new tag for local image `docker tag <local-image-repository>:<local-image-tag> localhost:5000/<local-image-name>`<br>
+If the TAG for local image is `<none>` then<br>
+`docker tag <local-image-repository> localhost:5000/<local-image-name>`
+3. Push to local registry<br>
+`docker push localhost:5000/<local-image-name>`<br>
+Which will automatically add latest tag to the `localhost:5000/<local-image-name>` when can be checked again in `docker images`
+4. In yaml file for Kubernetes set `imagePullPolicy` to `IfNotPresent`
+
+`curl localhost:5000/v2/_catalog` to see what repositories are in your registry.
