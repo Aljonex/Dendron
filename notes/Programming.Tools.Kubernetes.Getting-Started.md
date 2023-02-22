@@ -2,7 +2,7 @@
 id: y01vmzp44eykbfjtp2vnuig
 title: Getting-Started
 desc: 'Page about the initial setup and issues around Kubernetes'
-updated: 1676648439353
+updated: 1677060754645
 created: 1676025937352
 ---
 ### Initial stages
@@ -17,8 +17,9 @@ General layout of syntax is: `kubectl [command] [TYPE] [NAME] [flags]`
 ### Setting up a local Repository
 The way I understand is Kubernetes is almost like Git in the sense that you have a repository for your pod files and clusters, to do this you would do the command:
 `docker run -d -p 5000:5000 --restart=always --name registry registry:2`
-- `-d` runs this in a detached state so you don't need to see the logs (this can be ascertained by `docker logs -f <containerID>`)
-
+- `-d` runs this in a detached state so you don't need to see the logs (this can be ascertained by `docker logs -f <containerID>`)<br>
+[[Medium article on this | https://medium.com/htc-research-engineering-blog/setup-local-docker-repository-for-local-kubernetes-cluster-354f0730ed3a]]<br>
+[[Stackoverflow | https://stackoverflow.com/questions/36874880/kubernetes-cannot-pull-local-image/59269154#59269154]]
 
 #### Useful commands
 - Stop all pods: `kubectl delete all --all --namespace default`

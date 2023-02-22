@@ -2,7 +2,7 @@
 id: 5dmvg7mnnkltzrvzih72xk1
 title: Argo
 desc: 'Objective to create a moodle page for Argo that future trainees can go through to learn about it'
-updated: 1675960246667
+updated: 1677057883027
 created: 1675855409245
 ---
 ### Prerequisites
@@ -16,6 +16,7 @@ created: 1675855409245
 <br> [[Kubernetes Cloud Tut | https://confluence.apak.com/live/display/WIKI/Cloud+Training%3A+Kubernetes]]
 <br> [[Kubernetes Training and Local Setup | https://confluence.apak.com/live/display/WIKI/Kubernetes+Training]]
 
+![[Programming.Tools.Helm#helm]]
 > Confluence:
 <br> [[Helm Charts Cloud Tut | https://confluence.apak.com/live/display/WIKI/Cloud+Training%3A+Helm+Charts]]
 

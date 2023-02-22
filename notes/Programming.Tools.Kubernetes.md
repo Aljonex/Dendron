@@ -2,7 +2,7 @@
 id: hzpowz01h8f3fx6tvawz7kc
 title: Kubernetes
 desc: ''
-updated: 1676645818483
+updated: 1677058087650
 created: 1675855568297
 ---
 ## Kubernetes
@@ -136,6 +136,8 @@ Are a great way to organise clumps of clustered things together so you don't get
 To create a new namespace `kubectl create namespace <name>` and can see all namespaces with `kubectl get namespaces`.
 These are useful as you can limit resources on given namespaces, but when trying to find any of the resources you must add the flag `-n=<namespace-name>`.
 
+[[Useful google resource | https://cloud.google.com/blog/products/containers-kubernetes/kubernetes-best-practices-organizing-with-namespaces]]
+
 ```bash
 alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config view
 apiVersion: v1
@@ -157,29 +159,171 @@ users:
   user:
     client-certificate-data: DATA+OMITTED
     client-key-data: DATA+OMITTED
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl change namespace
-error: unknown command "change" for "kubectl"
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-context
-error: unknown command "get-context"
-See 'kubectl config -h' for help and examples
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get -context
-error: unknown shorthand flag: 'c' in -context
-See 'kubectl config --help' for usage.
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-contexts
+alexajones2@ITEM-S134843:~$ kubectl config get-contexts
 CURRENT   NAME              CLUSTER           AUTHINFO          NAMESPACE
 *         rancher-desktop   rancher-desktop   rancher-desktop
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config set-contexts --current --namespace=tomcat
-error: unknown flag: --current
-See 'kubectl config --help' for usage.
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config set-context --current --namespace=tomcat
+alexajones2@ITEM-S134843:~$ kubectl config set-context --current --namespace=tomcat
 Context "rancher-desktop" modified.
-alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/app (Alex-Jones/dev) $ kubectl config get-contexts
+alexajones2@ITEM-S134843:~$ kubectl config get-contexts
 CURRENT   NAME              CLUSTER           AUTHINFO          NAMESPACE
 *         rancher-desktop   rancher-desktop   rancher-desktop   tomcat
 ```
 
+To get the shell of a kubernetes pod:
+```
+` kubectl exec -it <pod-name> -c <container-name> -- /bin/bash`
+
+And to see data in a postgres database (for example):
+root@deployment-aj-6549644b7f-wzpw6:/# psql -U postgres -d postgres
+psql (11.8 (Debian 11.8-1.pgdg90+1))
+Type "help" for help.
+
+postgres=# SLECT * from vehicle
+postgres-# SELECT * from vehicle
+postgres-# SELECT COUNT(*) FROM vehicle
+postgres-# \dt
+                 List of relations
+ Schema |         Name          | Type  |  Owner
+--------+-----------------------+-------+----------
+ public | priceband             | table | postgres
+ public | pricerecord           | table | postgres
+ public | pricerecord_priceband | table | postgres
+ public | vehicle               | table | postgres
+(4 rows)
+
+postgres-# SELECT * from vehicle
+postgres-# \q
+```
+
+To convert a PostgreSQL database from a Docker container to an import.sql file, you can use the pg_dump utility inside the container to generate a SQL dump file of your database, and then copy it from the container to your local machine.
+
+Here's how you can do it:
+
+Start a temporary container to generate the SQL dump file:
+
+`docker exec -it <postgresContainer> sh`
+
+`pg_dump -U <username> <database> > dump.sql`
+
+Replace <network> with the name of the Docker network that your PostgreSQL container is running on, <username> with the username for the PostgreSQL database, and <database> with the name of the database you want to convert.
+
+Copy the SQL dump file from the container to your local machine:
+
+`docker cp <container_id>:/dump.sql /path/to/local/directory`
+
+```bash
+alexajones2@ITEM-S134843:~$ docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                                 NAMES
+e65ddc0f9b6d   jsf-app                 "catalina.sh run"        3 minutes ago   Up 3 minutes   8081/tcp, 0.0.0.0:8081->8080/tcp, :::8081->8080/tcp   app_tomcat_1
+0dcae9497a21   postgres:11.8           "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp             postgres_11_dev
+5da85ddd41cd   dpage/pgadmin4:latest   "/entrypoint.sh"         3 minutes ago   Up 3 minutes   443/tcp, 0.0.0.0:9000->80/tcp, :::9000->80/tcp        pgadmin
+1cc04faaac57   registry:2              "/entrypoint.sh /etc…"   9 days ago      Up 4 hours     0.0.0.0:5000->5000/tcp, :::5000->5000/tcp             registry
+alexajones2@ITEM-S134843:~$ docker cp 0dcae9497a21:/dump.sql /mnt/c/Users/alexajones2/app
+```
+
+Replace `<container_id>` with the ID of the temporary container you started in step 1, and `/path/to/local/directory` with the path to the local directory where you want to save the dump.sql file.
+
+Convert the SQL dump file to the import.sql file format. You can use a text editor like Notepad or Sublime Text to do this.
+
+Open the SQL dump file in your text editor and replace the first line (CREATE DATABASE) with the following:
+
+`USE <database>;`
+
+Replace `<database>` with the name of your database.
+
+Save the file as import.sql.
+
+
+Set up the import.sql as a configmap on its own so it can be used in a deployment
+`kubectl create configmap <nameOfMap> --from-file=sql-file=<path_to_sql_file>`
+and then from here you can simply reference as needed:
+```yaml
+    spec:
+      restartPolicy: Always
+      volumes:
+        - name: postgres-11-vol
+          configMap:
+            name: import.sql
+```
+But you still have to go into PgAdmin and register the server:
+![](2023-02-20-17-39-42.png)<br>
+It can be named whatever you want, but you'll have to know this name to call it later, I called I postgres, and the host changed because of a service defined in the deployment yaml, shown below with hostname:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  DB_HOST: postgres-svc
+  DB_USER: postgres
+  DB_PASSWORD: welcome
+  PGADMIN_DEFAULT_EMAIL: postgres@soprabanking.com
+  PGADMIN_DEFAULT_PASSWORD: welcome
+  import.sql: |-
+    {{ .Files.Get "import.sql" | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-svc
+  namespace: tomcat
+  labels:
+    app: app-aj
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: app-aj
+---
+### postgres ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: postgres-ingress
+  namespace: tomcat
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: postgres-svc
+                port:
+                  number: 5432
+```
+
 ### Data Storage
+Kubernetes supports many types of volumes, a pod can use any number of volume types at once and each container in a pod can access them.
+Basically a volume is a directory, which may have data in it and the medium and its contents are determined by the volume type used.
+
+To use a volume, specify the volumes to provide for the Pod in `.spec.volumes` array of the yaml and declare where to mount the volumes into containers in `.spec.containers[*].volumeMounts`.
+While you're not able to have volumes within other volumes, you can use the `volumeMounts.subPath` entry in a yaml to specify that data coming from this mount gets stored in a subdirectory of the volume and not the root.
+
+There are also the *PersistentVolume* subsystem which provides an API for users and administrators to abstract details of how storage is provided from how it is used, you must make use of *PersistentVolume* and *PersistentVolumeClaim* which respectfully are:
+- a piece of storage in the cluster that has been provisioned, and have a lifecycle independent of any Pod that uses the PV
+- a request for storage by a user, PVCs consume PV resources and can be mounted with varying *AccessModes*.
+
 ### Configuration and Secrets
+#### Best Practices 
+- Specify latest stable API version
+- Config files should be stored in version control before pushing to the cluster, it allows quick roll backs if necessary
+- Write config files in YAML instead of JSON, YAML is more user friendly
+- Group related objects into single file, remember can separate with `---`
+- Many `kubectl` commands can be called on a directory, you can call `kubectl apply` on a directory of files! (`kubectl apply -f <directory>`)
+- Don't use naked Pods (not bound to ReplicaSets or Deployments), they won't be rescheduled in the event of node failure
+- Create *Service* before its corresponding backend workloads (Deployments or ReplicaSets)
+
+#### ConfigMaps
+API object used to store non-confidential data in key-value pairs, Pods can consume these as *environment variables, command-line args, or config files in a volume*. They allow the decoupling of environment-specific configuration from your container images, allowing portability of applications.
+> If you want to store confidential data, make use of a **Secret** rather than a ConfigMap.
+
+
 
 ## Rancher Desktop
 - [[Confluence Practical example | https://confluence.apak.com/live/display/~rich.ellor/Docker+and+Kubernetes+Practical+Example#DockerandKubernetesPracticalExample-Kubernetes(RancherDesktop)]]

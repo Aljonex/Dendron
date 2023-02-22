@@ -2,7 +2,7 @@
 id: wlw06wkxhmk1f68x0hvzcw5
 title: Inheritance
 desc: ''
-updated: 1669374558970
+updated: 1677074539585
 created: 1669374152312
 ---
 Inheritance is for code reuse and the DRY (Don't Repeat Yourself) principle.
@@ -119,3 +119,5 @@ class GFG {
     }
 }
 ```
+
+[[Youtube video | https://youtu.be/hxGOiiR9ZKg]]
