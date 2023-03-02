@@ -2,7 +2,7 @@
 id: pwpfcycntxea7oa7imuisej
 title: Getting-Started-Tut
 desc: ''
-updated: 1675356985968
+updated: 1677584817306
 created: 1675350369987
 ---
 ### Getting started app
@@ -316,3 +316,4 @@ alexajones2@ITEM-S134843:/mnt/c/Users/alexajones2/Training/docker-test-app/getti
 [+] Building 11.5s (11/13)
 ```
 Solved through forced pull of the docker/dockerfile:1 image.
+
