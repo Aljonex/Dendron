@@ -1,9 +1,9 @@
 ---
-id: z1ftqz3cjlnl255lr8whi12
-title: Basic Example
-desc: 'For trainees who didn't complete the tutorial application a simple example using nginx'
-updated: 1678375568123
-created: 1678370095776
+id: gj4w38sgy8vgnyfvboybcms
+title: Basics
+desc: ''
+updated: 1678450757184
+created: 1678450727544
 ---
 ### K8s
 Resources used:
