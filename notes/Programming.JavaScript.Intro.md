@@ -2,7 +2,7 @@
 id: kf2u29g5c7i9r3nns694wp4
 title: Intro
 desc: ''
-updated: 1678457824321
+updated: 1678467490418
 created: 1678450812250
 ---
 JavaScript or JS is inextricably linked to html as its language `.js` files, are *scripts* which can be written directly into a webpage's HTML or imported and run automatically when the page loads.
@@ -34,3 +34,4 @@ There are some *classes* and *modules* that enable `use strict` automatically so
 ## Variables
 A variable is *named storage* for data, and you can store loads of things, to declare you must use the `let` keyword.
 Older scripts have a `var` keyword instead, these variables cannot start with a digit or have hyphens, but can start with `$` or `_`.
+Declaring a constant and unchanging variable needs the keyword `const`
