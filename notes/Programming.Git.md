@@ -1,8 +1,8 @@
 ---
-id: ctwaxwltxr4sjcoaajenvxr
+id: ec0988jrr188lfwgs6i2tr1
 title: Git
 desc: ''
-updated: 1682412266183
+updated: 1669194309899
 created: 1668168528813
 ---
 ## Learning Objectives
@@ -106,7 +106,7 @@ To rewrite a range of commits, it is also easy using the `filter-branch` command
 This doesn't overwrite any timestamps or anything and just appends that message.
 For example:
 
-### Git delete branch 
+### Deleting local or remote branch
 ```bash
 // delete branch locally
 git branch -d localBranchName
