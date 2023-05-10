@@ -2,7 +2,7 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1680623586057
+updated: 1682679603643
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
@@ -31,3 +31,25 @@ Go to bitbucket and click the three dots and build and select `Regression Tests`
 
 ### Risk Assessments
 [James Reynolds](https://confluence.apak.com/live/pages/viewpage.action?spaceKey=~james.reynolds&title=Risk+Analysis+8.47+Draft)
+
+### Ticket Types
+CMN - for APAK common work
+WMOD - for WFS model work
+SX - for WFS work
+ETPS - for production and branch work
+
+### Create WMOD ticket
+Edit the ETPS ticket issue to see everything needed, click create:
+1. Project - WMOD
+2. Issue Type - Task
+3. Details just add in all the details from ETPS ticket
+4. Copy Summary and Description etc
+5. Client Code I1
+6. No sprint or epic link
+7. Link the ticket with SX ticket made and ETPS ticket
+
+### Merging WMOD ticket
+1. Model updates -> Model PR up -> Build model Pr in jenkins -> Note build version
+2. Wfs branch -> insert new model version in POM.xml file -> raise PR, run build to check if works
+3. If works -> Merge model PR -> build release version of model -> Note release build version
+4. Update model version in wfs branch from the Build in jenkins then merge.
