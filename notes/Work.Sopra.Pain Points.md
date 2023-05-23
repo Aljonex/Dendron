@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1681816044241
+updated: 1684762837030
 created: 1679309795074
 ---
 
@@ -33,6 +33,8 @@ If the branch has moved ahead of where you are and this causes merge conflicts y
 ### Adding VM args to configurations Intellij
 `-javaagent:C:\Users\alexajones2\ide_resources\libs\aspectjweaver-1.9.5.jar -Xms256m -Xmx4096m -XX:+UseParallelGC -Djava.io.tmpdir=C:\tmp`
 
+### setterAspect error
+When repopulating a db if this comes up it means you're lacking VM args for the populator, you also need to have `shorten command line` with `JAR manifest - java -cp classpath.jar className [args]` selected.
 
 ### Devidence (Acceptance Testing)
 https://confluence.apak.com/live/pages/viewpage.action?spaceKey=WIKI&title=Acceptance+Testing

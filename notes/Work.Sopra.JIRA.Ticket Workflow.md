@@ -2,13 +2,50 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1682679603643
+updated: 1683892869172
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
 ## Start
 Its fine to use `git push --set-upstream origin feature/<yourFeature>` when setting the upstream to push commits.
 Also generally when moving to Sprint Prep generally `None` should be selected for merges, you *must* add an original estimate.
+
+## New ticket process as of 12/05
+so the 2 main things are:
+
+test locally and on the environment to free up testers for exploratory and further testing
+before merging there must be QA approval
+
+So for example for my SX-65127 (reverse event logic serialisation), once locally tested it should be tested on one of the cloud environments, so SX-65126 is on C74 so the environment is C74, but 65127 is client code I1 so what is the cloud env I'd test it on?
+
+Ah as you've just said you just comment which env you tested it on, does this need to be put in the Devidence document also????
+
+At the moment I think we are largely managing the demos and devidence documents pretty well, but we haven't really taken on the sanity testing of SX tickets on the environment at the end.
+
+ 
+
+So what I am proposing is changing the flow to:
+
+- Code Review
+    - Demo
+        - Discussion between dev and tester around where the changes are in order to build risk based regression cases
+    - Devidence
+        - Reviewed by tester
+- Internal Test
+    - Developer tests the SX
+        - Key principle that the developer needs to have 100% confidence
+            - Can be through UI testing, or Automated testing
+            - Minimum of one check in the UI manually
+        - Developer adds a comment to the ticket
+            - Details of what they tested and if it worked
+    - Developer transitions the ticket to External UAT once done
+- External UAT
+    - Provides the queue of work needing the RBRG tasks to be completed by testers
+    - Testers check that all steps have been followed and then close the ticket
+
+ 
+
+Hopefully this will remove some of the pressure on the testers to keep up with the head of branch releases, and with the additional exploratory testing time end up increasing the coverage of testing we can do. 
 
 ## 8.47 
 ### When closing
