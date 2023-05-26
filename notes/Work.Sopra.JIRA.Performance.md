@@ -2,7 +2,7 @@
 id: t5tok8saxd76anl8a7r2bsq
 title: Performance
 desc: ''
-updated: 1684763984650
+updated: 1685119399808
 created: 1683630761473
 ---
 # SX-65126
@@ -10,10 +10,10 @@ created: 1683630761473
 Firstly is the *Loan Movement Summary Report EXCEL* **Daily Report** button enabled or not?
 I had to recreate the steps in the ticket which were:
 
-    Log into the system and select Dealing Company<br>
-    Navigate to Reports > Real Time > Reporting<br>
-    Under Daily reports, click Loan Movement Summary Report EXCEL<br>
-    Time how long the report takes to generate.<br>
+    Log into the system and select Dealing Company
+    Navigate to Reports > Real Time > Reporting
+    Under Daily reports, click Loan Movement Summary Report EXCEL
+    Time how long the report takes to generate.
     Report should generate much faster after the fix is applied.
 
 I realised quickly I didn't have the summary report and after a quick message in the 8.47 chat there were 2 options, either the stock movement report (which seemed viable) but then Archana and Jack demonstrated it was an option but needed enabling.
@@ -24,8 +24,8 @@ Created a Loan via loan management, the only hiccups were how to navigate option
 
 To do this I had to first check the AC, which is as follows
 
-    GIVEN: The Loan Movement Summary Report is enabled<br>
-    WHEN: The Loan Movement Summary Report is generated in Realtime reporting<br>
+    GIVEN: The Loan Movement Summary Report is enabled
+    WHEN: The Loan Movement Summary Report is generated in Realtime reporting
     THEN: The report is generated in a reasonable time frame given the size of the data output 
 
 Spent ages trying to recreate locally, lots of errors to do with the fact I was getting no NettCost but then Chris informed me that due to the volume of data it was best to use a cloud test machine.
@@ -671,5 +671,35 @@ Still get confused why the explain plan is low cost
 
 Potentially won't work for me as I'm working on cloud env not live machine.
 
+
+### Steps with Tim
+- Removed unused joins that were on and saw a roughly 25% increase in performance on the explain plan.
+```
+INNER JOIN Organisation dealer2_ ON agreementi1_.owner_id = dealer2_.id
+INNER JOIN PLAN plan3_ ON agreementi1_.plan_id = plan3_.id
+```
+And changed a WHERE NOT IN to `WHERE item_.itemType <> 'INTERNAL_ACCOUNT' AND item_.itemType <> 'AMORTIZED_LOAN'`
+- Time a normal loan movement run for the devidence, then push the fast changes with the new SQL (tested by query conversion) then check another loan movement for the same day, show time improvement, for one method only then start the next method
+- Potential speedup also by changing
+```SQL
+ WHERE NOT item_.itemType IN (
+						'INTERNAL_ACCOUNT'
+							, 'AMORTIZED_LOAN'
+						)
+				)
+to
+
+WHERE item_.itemType <> 'INTERNAL_ACCOUNT' AND item_.itemType <> 'AMORTIZED_LOAN'
+```
+and maybe removal of whole above of:
+```SQL
+WHERE agreementi1_.id IN (
+				SELECT ai1_.id AS y0_
+				FROM Item item_
+				LEFT OUTER JOIN TITLE_ITEM item_1_ ON item_.id = item_1_.items_id
+				INNER JOIN Item ai1_ ON item_.agreementInvoice_id = ai1_.id
+				LEFT OUTER JOIN TITLE_ITEM ai1_1_ ON ai1_.id = ai1_1_.items_id
+```
+as does the same as first bit, only the where just mentioned is useful
 ### Use of P6Spy
 [P6Spy](https://confluence.apak.com/live/display/WIKI/Logging+and+Debugging+SQL+in+WFS+with+P6Spy) - however this would be great but locally the calling of Loan Movement Summary Report doesn't work

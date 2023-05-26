@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1684762837030
+updated: 1685016679716
 created: 1679309795074
 ---
 
@@ -38,3 +38,39 @@ When repopulating a db if this comes up it means you're lacking VM args for the 
 
 ### Devidence (Acceptance Testing)
 https://confluence.apak.com/live/pages/viewpage.action?spaceKey=WIKI&title=Acceptance+Testing
+
+### Day end jobs
+There's a recovery tool that allows running of single EOD jobs.
+
+### Upgrade to Java 17
+- Download java 17 coretto
+- Download newest tomcat 9.0.20
+- Download jaspectweaver 1.9.8.jar
+- Update tomcat script.properties to use the above 2 (this was issue of running tomcat script)
+- Update JUnit template to include
+```
+-javaagent:c:/Users/alexajones2/ide_resources/libs/aspectjweaver-1.9.8.jar
+-Xms256m
+-Xmx4096m
+-XX:+UseParallelGC
+-Djava.io.tmpdir=C:\tmp
+--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED
+--add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED
+--add-opens=java.base/java.io=ALL-UNNAMED
+--add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--add-opens=java.base/java.math=ALL-UNNAMED
+--add-opens=java.base/java.nio=ALL-UNNAMED
+--add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+--add-opens=java.base/java.util=ALL-UNNAMED
+--add-opens=java.base/javax.xml=ALL-UNNAMED
+--add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens=java.management/sun.management=ALL-UNNAMED
+--add-opens=java.naming/com.sun.jndi.ldap=ALL-UNNAMED
+--add-opens=jdk.management/com.ibm.lang.management.internal=ALL-UNNAMED
+--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED
+```
+- Update all run config templates to use new javaagent and Java 17
+- Update project structure to default to Java 17
+    - Make sure modules are using Java 17
+    - Update SDK to Java 17

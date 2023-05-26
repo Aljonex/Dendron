@@ -2,7 +2,7 @@
 id: zuapj15ybgwvqjq4qmn0qt2
 title: Menu Updates
 desc: ''
-updated: 1679392849668
+updated: 1685016484116
 created: 1679392456253
 ---
 ### Removing funding request from menu
@@ -13,3 +13,4 @@ Find the level you need to be in to remove, for this ticket I had to be at eithe
 - Find the section in the *enum* `PageIdentifier.java` to be removed also
 - `ctrl+click` things like the identifier to find where in the project things lie
 - Look in the `BaseUI.xml` to find beans to remove also, potentially the `SystemX.xml`
+- `newMenuStructure.json` and `oldMenuStructure.json`
