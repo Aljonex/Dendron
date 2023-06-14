@@ -18,6 +18,7 @@ Dawid kindly pointed me to `systemx/controllers/alerts/planrules` and I found th
 - Removed `UPDATE fieldDef SET viewPermissionAuth='ROLE_OVERRIDE_CREDIT_LINE_NOT_VALID' WHERE userRight=409;` from `wfs-migration/src/main/resources/sql_scripts/2016-T03-pre.sql`
 
 Needed to write model step for this so that it removed this rule on live before pushing it. To revert changes use `git revert <commitHash>` and do it in reverse order, newest to oldest!
+Model step needs flyway change [see](https://confluence.apak.com/live/display/WIKI/Flyway%3A+Pending+Migrations), where the rule would be removed from the database via a new sql file that removes it from relevant tables.
 
 ### SX-65126 Slow generation of Loan Movement Summary Report
 Firstly is the *Loan Movement Summary Report EXCEL* **Daily Report** button enabled or not?

@@ -2,7 +2,7 @@
 id: t5tok8saxd76anl8a7r2bsq
 title: Performance
 desc: ''
-updated: 1685119399808
+updated: 1686751439561
 created: 1683630761473
 ---
 # SX-65126
@@ -93,6 +93,7 @@ https://jenkins.apak.delivery/job/wfs-docker/
 - JAVA_VERSION: openjdk 11
 
 Then for second step make the VERSION: `<version.additional>-SNAPSHOT`
+Latest = `8.47.220.37.11.5.23-SNAPSHOT`
 
 After this builds, ask all users of the environment if its okay to update the release and let them know the changes that were made and what (if anything) it could break.
 
@@ -107,6 +108,8 @@ Repositories -> Sandbox : definitions of all cloud environments
     - edit in the UI if needs be, commit and create PR and once ticked wait for jenkins, add -SNAPSHOT to the end of version
 
 Go into argo, sandbox applications then synchronize it `argo.apak.delivery/applications` 
+
+A combination of these 2 (more specific to cloud envs is) -> [Build with docker image](https://jenkins.apak.delivery/job/WFS_FEATURE_BRANCH_WITH_DOCKER_IMAGE/)
 ### Kibana logs
 Before adding logging there were only 3 logs being shown, when the LOAN_MOVEMENT_SUMMARY_REPORT started, then saying something to do with `LOANMVMT` and then the report finishing, so logs were added to commonly seen methods throughout the generation in the `System Admin -> Recovery Tools -> Thread Dump Recovery Tool` by repeatedly loading this and copying the contents across to a notepad file to see what was being called throughout.
 
@@ -701,5 +704,30 @@ WHERE agreementi1_.id IN (
 				LEFT OUTER JOIN TITLE_ITEM ai1_1_ ON ai1_.id = ai1_1_.items_id
 ```
 as does the same as first bit, only the where just mentioned is useful
+
+To re-run locally go `Project Structure -> Project` and change back to java 11 sdk with java 8 lang level and recompile to make JAR again.
 ### Use of P6Spy
 [P6Spy](https://confluence.apak.com/live/display/WIKI/Logging+and+Debugging+SQL+in+WFS+with+P6Spy) - however this would be great but locally the calling of Loan Movement Summary Report doesn't work
+
+### Potentially useful Kibana logs
+- [6th June](https://kibana.apak.delivery/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2023-06-06T09:30:00.000Z',to:'2023-06-06T09:35:37.917Z'))&_a=(columns:!(message),filters:!(),index:'6f1b5520-3084-11ea-8158-13cf6e6ef45b',interval:auto,query:(language:kuery,query:'message:%20(%22Starting%20generation%22%20OR%20%22Report%20generation%20finished%22%20OR%20LOANMVMT%20OR%20DailyReportScriptedDataSetPage1%20OR%20UnitReportDAO)'),sort:!()))
+
+
+### Issues
+- *Funded assets by dealer reports* requires `dealer` which comes from `getBaseCriteria()` `crit.createAlias("agreementInvoice.owner", "dealer");`
+- *Loan approval to live* requires `plan` which comes from `getBaseCriteria()` `crit.createAlias("agreementInvoice.plan", "plan");` and the method invoking it is `UnitReportDAO.getPreliveToLiveReportResults()` 
+- *Loan Cancellation Report* needs `plan` also from `getBaseCriteria()` `crit.createAlias("agreementInvoice.plan", "plan");` and the method requiring it is `getUnitLevelReportResults()`
+- *Loan Dealer Transfer* needs plan as it requires `plan.reference` and the top method needing it is `getTransferUnitLevelReportResults()`
+- *Loan Deconsign* needs `plan.reference` and top level that needs it is `getUnitLevelReportResults()`
+- *Loan New* needs `plan.reference` coming from `getUnitLevelReportResults()`
+- *Loan Plan Transfer* needs `plan.reference` coming from `getTransferUnitLevelReportResults()`
+- *Loan Prelive* needs `plan.reference` coming from `getPreliveToLiveReportResults()`
+- *Loan Reversal* needs `plan.reference` coming from `getUnitLevelReportResults()`
+- *Retail Double Financing, Roll Forward Report, and Loan Movement Summary Report* all suffer from the problem of seemingly infinite generation
+- Table `ReportQueueEntry` shows things currently in report queue
+
+
+#### Check people logged in to cloud env
+
+`<cloud-env-name>.apak.delivery/WFS/systemMonitor.faces`
+![](2023-06-13-14-50-42.png)
