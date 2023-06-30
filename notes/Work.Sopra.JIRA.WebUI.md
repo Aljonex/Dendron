@@ -2,10 +2,10 @@
 id: 443pb7j75wr9jo9dg27d0ww
 title: WebUI
 desc: ''
-updated: 1686740078865
+updated: 1687522408393
 created: 1686730623670
 ---
-### ETPS-1785 More actions scrolls
+## ETPS-1785 More actions scrolls
 Originally thought it was an error to do with JSF, and found the `LoanAccountSearch.xhtml` page for the page I was locally recreating with `DC selected -> Loan Management -> Capital Loans -> Loan Search -> Search Views = Loans & Item types = Invoice`. 
 Also, found out that the error doesn't only occur on `More Actions` being clicked but also `Settings` (less noticeable as unlikely to click this when scrolled down).
 Found both of these on `table.css` under names of `.ApakTableSettingsButton` and `TableExtraOptions`, then found both of these on `ApakTableRendererOld` and thought it was something to do with that.
@@ -43,3 +43,52 @@ However, spoke to Jordan Hellier (JSF and UI wizard as was a major part of the U
     As defined in the HTML specification, you can use href="#top" or href="#" to link to the top of the current page. Yes, it is easy to scroll to the top by using the html's <a> tag.
 
 The lines that added a `#` to the Href in `ApakTableRendererOld` were `writer.writeAttribute(ApakTableRendererUtils.HREF, "#", null);` and as I thought there were exactly 2 instances of this, both could be removed but this is only for the more actions.
+
+### After merging
+Had forgot to check for tests, found that it failed `ApakTableRendererUTest` on 3 methods `testEncodeEnd` `testEncodeBeginWithSubheaderInsteadofHeader` and `testEncodeBegin`, this was because there are 3 text files namely `encodeEndCorrectOutput.txt encodeBeginCorrectOutput.txt` and `encodeBeginWithSubheaderInsteadOfHeaderCorrectOutput.txt` and these all had checks against either `moreActions` or `settings` that was verifying there was `href="#"` which was my change, had to remove this bit and then push and create PR, because it was too quick I couldn't `build with regression tests` so I had to go to [Jenkins Regression Tests](https://jenkins.apak.delivery/job/WFS%20Regression%20Tests/) and `Scan multibranch Pipeline now` to find new branch, then could go back to my PR and test.
+
+
+## Unnamed ticket, issue with Standard Bank with Max
+Some mandatory fields weren't showing as being editable in Dealing Company level `Administration -> Organisations -> Clients`, for Standard Bank which runs on `8.47.388.15` but in Honda this worked (also `8.47.388.15`), so went to this page and found the relevant xhtml.
+`adminOrgDealer.xhtml` and from there found that for General Details I needed to be on
+```java
+<apak:apakSubTabSet selectedTabId="#{adminOrgDealer.selectedSubTabId}" id="generalSubTabs">
+                        <apak:apakTab id="mainDetailsTab" title="#{sysxmessage.main_details}">
+                            <ui:include src="/inc/organisation/tab_adminOrgGeneralMainDetails.xhtml">
+                                <ui:param name="adminOrg" value="#{adminOrgDealer}"/>
+                                <ui:param name="entity" value="#{adminOrgDealer.organisation}"/>
+                            </ui:include>
+```
+`tab_adminOrgGeneralMainDetails.xhtml`, also found the controller through the `BaseUI.xml` and under `adminOrg`
+```xml
+<bean id="adminOrgDealer"
+		class="com.apakgroup.systemx.ui.organisation.dealer.DealerAdminController"
+		scope="conversation" parent="anonymisableOrganisationAdminController">
+    <property name="uccService" ref="uccService" />
+    <property name="pmsiService" ref="pmsiService" />
+    <property name="uccController" ref="uccAdmin" />
+    <property name="pmsiController" ref="pmsiAdmin" />
+    <property name="insuranceLimitDetailsController" ref="insuranceLimitDetails" />
+    <property name="insuranceService" ref="insuranceService" />
+    <property name="displayResolverFactory" ref="dealerSelectionDisplayResolverFactory" />
+    <property name="permitOverrideAutoPaymentAllocation" value="${permitDealerOverrideAutomatedPaymentAllocation}" />
+</bean>
+```
+From here I knew the 4 fields that weren't showing were *VAT number, Company Name, Trading Name, and Company Reg Number*, and for these there is a method for disabling called `#{adminOrg.isGeneralDetailsReadOnly('<variable>')}`
+
+So I found the method:
+```java
+public boolean isGeneralDetailsReadOnly(String fieldName) {
+        return isReadOnly() || isFieldReadOnly(WfsFieldEntity.DEALER, fieldName)
+                || isGeneralSettingsReadOnly();
+}
+```
+And also noticed that in the xhtml there were 6 instances of this being called, but both others were also readOnly, however they showed as used a `selectItems`, now in this method there are 3 `OR` statements.
+`isReadOnly()` comes from a bean injection and due to other things shown on the page as editable also check this, I knew it was false, `isFieldReadOnly()` was hardcoded and I guessed this was false.
+This left `isGeneralSettingsReadOnly()` which checked the permissions manager, Max assured me at PFC level he had these permissions, but I got him to double check and he didn't and VOILA it was fixed.
+```java
+public boolean isGeneralSettingsReadOnly() {
+        return isReadOnly() || !(permissionsManager.hasAllPermissionRights(UserRight.EDIT_DEALERS,
+                UserRight.EDIT_DEALERS_GENERAL_SETTING));
+    }
+```

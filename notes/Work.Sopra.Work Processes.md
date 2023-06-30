@@ -2,7 +2,7 @@
 id: g70kze1dz3xlaa7246zjdw8
 title: Work Processes
 desc: ''
-updated: 1686141102111
+updated: 1687266371206
 created: 1678976821883
 ---
 ## Holiday
@@ -35,3 +35,5 @@ So what I am proposing is changing the flow to:
 - External UAT
     - Provides the queue of work needing the RBRG tasks to be completed by testers
     - Testers check that all steps have been followed and then close the ticket
+
+Java 17 from WFS `8.47.480`

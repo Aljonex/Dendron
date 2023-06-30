@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1685016679716
+updated: 1687250924609
 created: 1679309795074
 ---
 
@@ -74,3 +74,8 @@ There's a recovery tool that allows running of single EOD jobs.
 - Update project structure to default to Java 17
     - Make sure modules are using Java 17
     - Update SDK to Java 17
+
+
+### Useful Shortcuts Intellij
+- `ctrl+click` - follow method
+- `ctrl+f12` - show methods in class

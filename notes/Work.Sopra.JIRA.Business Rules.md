@@ -20,6 +20,8 @@ Dawid kindly pointed me to `systemx/controllers/alerts/planrules` and I found th
 Needed to write model step for this so that it removed this rule on live before pushing it. To revert changes use `git revert <commitHash>` and do it in reverse order, newest to oldest!
 Model step needs flyway change [see](https://confluence.apak.com/live/display/WIKI/Flyway%3A+Pending+Migrations), where the rule would be removed from the database via a new sql file that removes it from relevant tables.
 
+[Example](https://bitbucket.apak.delivery/projects/BRK/repos/wfs-model/pull-requests/2157/diff#src/main/java/com/apakgroup/systemx/model/api/rates/IRateRule.java)
+
 ### SX-65126 Slow generation of Loan Movement Summary Report
 Firstly is the *Loan Movement Summary Report EXCEL* **Daily Report** button enabled or not?
 I had to recreate the steps in the ticket which were:
