@@ -2,7 +2,7 @@
 id: bg83pzso5furhv19gh6rk21
 title: WFS-model
 desc: ''
-updated: 1688029915925
+updated: 1688468999197
 created: 1682414261141
 ---
 ## Remove HQL from model SX-65093
@@ -19,6 +19,15 @@ When building just on `WFS Model Release Multibranch -> <branch>` I could also g
 2023-06-29 10:00:38.637   - [deleted]         support/55.0.2/release/55.0.2.163
 2023-06-29 10:00:38.637   * [new tag]         55.0.2.163 -> 55.0.2.163
 ```
+
+
+### [Merging WMOD ticket](https://confluence.apak.com/live/pages/viewpage.action?pageId=29145650)
+1. Model updates -> Model PR up -> Build model Pr in jenkins -> Note build version
+2. Wfs branch -> insert new model version in POM.xml file -> raise PR, run build to check if works
+3. If works -> Merge model PR -> build release version of model -> Note release build version
+4. Update model version in wfs branch from the Build in jenkins then merge.
+
+
 #### FLYWAY
 Extends DevOps to your databases to accelerate software delivery and ensure quality code. 
 It builds on application delivery processes to automate database deployments.
