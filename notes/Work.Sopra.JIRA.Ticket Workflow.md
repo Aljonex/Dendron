@@ -2,7 +2,7 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1687182109201
+updated: 1691503322445
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
@@ -90,3 +90,5 @@ Edit the ETPS ticket issue to see everything needed, click create:
 2. Wfs branch -> insert new model version in POM.xml file -> raise PR, run build to check if works
 3. If works -> Merge model PR -> build release version of model -> Note release build version
 4. Update model version in wfs branch from the Build in jenkins then merge.
+
+[Model Changes](https://confluence.apak.com/live/pages/viewpage.action?pageId=29145650)

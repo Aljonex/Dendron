@@ -2,7 +2,7 @@
 id: 79is3g8ias18k3ldsfd54r0
 title: Fleet
 desc: 'A file for knowledge on stuff to do with Fleet/Johto project'
-updated: 1688742075578
+updated: 1691502713442
 created: 1686919376670
 ---
 # Basics
@@ -218,12 +218,12 @@ Basics from James R:
 Go to `EffectOnFunding` enum class and find all usages of the `VALUE_ADDED_TO_PARENT` since this `VALUE_REDUCED_FROM_PARENT` is conceptually very similar, so can find out what should be simple and what you're not sure about (84 usages):
 - Firstly looks like it will be `VALUE_REDUCED_FROM_PARENT(EffectOnValueType.NONE)`
 
-***WFS-CORE***
+### ***WFS-CORE***
 #### Batch.Merge.Invoice
 - `InvoiceMerge` ~ DONE
     - `#addSubItems` - *line 2109* looks like an OR clause will be needed fort new functionality also
     - `#iterateSubItems` - *line 2524 & 2542* add to description, and include in total
-    - **Test** - `#setUpMockFinancialItem(ItemType, BigDecimal)` *line 2462* - add check here for `VALUE_REDUCED_FROM_PARENT` ????????????????
+    - **Test** - `#setUpMockFinancialItem(ItemType, BigDecimal)` *line 2462* - add check here for `VALUE_REDUCED_FROM_PARENT` ???????????????? No need to duplicate, tests nothing to do with functionality
 
 #### Controllers
 ##### Agreement controllers
@@ -233,7 +233,7 @@ Go to `EffectOnFunding` enum class and find all usages of the `VALUE_ADDED_TO_PA
 ##### Interest Controllers
 - `InterestCalculationPaymentSourceResolver` ~DONE
     - `#hasEffectOnFundingValueAddedToParent(IItem)` - *line 56* check to see if it affects funding value added to parent, either another boolean for `hasEffectOnFundingValueReducedFromParent` or change this to `hasEffectOnFundingValueChangedOnParent` and this alteration reflected in the filter where the `EffectOnFundingType` checked against is a set containing both `VALUE_ADDED_TO_PARENT` and `VALUE_REDUCED_FROM_PARENT` 
-- `InterestCalculationPaymentSourceResolverTest` ????????????????
+- `InterestCalculationPaymentSourceResolverTest` ???????????????? Unnecessary as doesn't test functionality of the new enum
     - `#setupCollectFromParentOrgItem(IPaymentSource paymentSource)` - *line 231* building based on collection from parent item, probably want to check if its either type again
 - `InterestCalculationService` ~ DONE (added REDUCED to enum_set)
     - `#populateTransactionPaymentSource(IItem fundedItem, EffectOnFundingType fundingType, FtType ftType)` - *line 1633* **unsure** what this one is doing
@@ -248,7 +248,7 @@ Go to `EffectOnFunding` enum class and find all usages of the `VALUE_ADDED_TO_PA
     - `#validateSubItem(IFIHolder fiHolder, Errors errors)` - *line 263* seems this is a check of validation that this child has no children and the parent is valid, probably seems more reasonable to create a set for `REDUCED` and `ADDED` children, RFLs and subsidies
 - `FinancialItemValidator` DONE
     - `validateOtherParameters(IFinancialItem financialItem, Errors errors, ValidationContext validationContext)` - *line 604* simple check parent holds all financial data other than cost, probably again, add OR check for `REDUCED`
-- `FinancialItemValidatorTest` !!!!!!!!!!!!!!!!!!!!! DON'T DO
+- `FinancialItemValidatorTest` !!!!!!!!!!!!!!!!!!!!! DON'T DO - James R said
     - `#testValidateOtherParameters_WithItemsParentHoldingAllFinancialDataExcludingCost()` - *line 1302* - unsure how to add here,  seems maybe duplicate test or as above, set of enums that contains both RFL and subsidy
 - `ItemValidator`  DONE
     - `#validateCostValues(IItem item, Errors errors)` - *line 470* - seems like add OR to the case as it is just iterating over parent values
@@ -432,6 +432,7 @@ if (scheduleItem != null && itemService.getFIHolderForItem(scheduleItem).getFina
 ```
 So it looks like I'll need to add an `AND` statement checking for `VALUE_REMOVED_FROM_PARENT`
 - Also **many** tests will need to be added to test through this
+#### How pieces fit together
 
 ### Steps to see government subsidy being added
 - First make it available on the `Administration -> Plan Configuration -> Finance Products` - I made it on the `Fleet Model World` product, under additional items, and new then just followed basic steps to set it up
@@ -442,3 +443,106 @@ So it looks like I'll need to add an `AND` statement checking for `VALUE_REMOVED
 
 ### Meeting Acceptance Criteria
 #### 1 ~ Setting Available
+- This was about adding the enum to the model, then to format it nicely had to look at what was being checked in `div_financialItemDetails.xhtml`
+- Could see all the others were nicely formatted and there was a method in the `financialItemDetailsController` called `getEffectOnFundingSelectItems()` and this used the MessagingManager, which briefly touches upon using translations to get the relevant translation
+- So then `ctrl+shift+f` and search for `VALUE_ADDED_TO_PARENT`
+- Add the translation both to `translations_en_e` (for EffectOnFundingType_VALUE_REDUCED_FROM_PARENT) amd then in `sysx_en.properties`
+- need to load this change into db before this will update correctly
+
+#### 2 
+- Followed suit from 1
+
+#### 3
+- Value doesn't get subtracted when govt subsidy
+- Turns out FinancialTransactionUtils wasn't only important thing
+- Line in InvoiceMerge 2109 - `addSubItems` in this check we'll have to differentiate between VALUE_ADDED_TO_PARENT and VALUE_REDUCED_FROM_PARENT and take from the total cost
+- Look in ItemService, this is where the `getTotalFundedDisplayValue` is and is how it gets calculated
+- Keep an eye on `BaseLoanDetailsController` and `StreamlinedController`
+```html
+div_loanDetails.xhtml
+
+<f:facet name="footer">
+    <h:outputText value="#{controller.selectedInvoiceWrapper.totalFundedDisplayValue}"/>
+</f:facet>
+```
+
+#### 4
+
+
+#### 5
+
+
+#### 6
+
+
+### Solution
+```java
+public void validateScheduleTotals(final IItem item, final IScheduleProfile scheduleProfile) throws CoreException {
+        LOGGER.info("Validate schedule totals");
+        if (scheduleProfile != null && item.getBusinessProcessRequest() != null) {
+            final ValidationException ex = new ValidationException(scheduleProfile, "entityValidation");
+            if (EnumSet.of(ItemType.AMORTIZED_LOAN, ItemType.COST).contains(item.getItemType())) {
+                validateSchedulePayments(item, scheduleProfile.getAmortizedSchedule(), ScheduleType.AMORTIZED, ex,
+                        null);
+            } else if (itemService.getPlanForItem(item)
+                    .getSystemProduct()
+                    .getSystemProductType() == SystemProductType.COMMERCIAL_LOAN
+                    && item.getItemType() == ItemType.LOAN) {
+                validateCommercialLoanTransactionsAreBalanced(item, ex);
+
+            } else {
+                final IFinancialItem financialItem = itemService.getFIHolderForItem(item).getFinancialItem();
+                validateSchedulePayments(item, scheduleProfile.getCollectionNett(), ScheduleType.COLLECT_NETT, ex,
+                        financialItem.getCollectedNettTiming());
+                validateSchedulePayments(item, scheduleProfile.getCollectionTax(), ScheduleType.COLLECT_VAT, ex,
+                        financialItem.getCollectedTaxTiming());
+                validateSchedulePayments(item, scheduleProfile.getPayoutNett(), ScheduleType.PAY_OUT_NETT, ex,
+                        financialItem.getPaidOutNettTiming());
+                validateSchedulePayments(item, scheduleProfile.getPayoutTax(), ScheduleType.PAY_OUT_VAT, ex,
+                        financialItem.getPaidOutTaxTiming());
+                validateSchedulePayments(item, scheduleProfile.getRental(), ScheduleType.RENTAL, ex, null);
+
+                if (SystemProductType.FLEET == itemService.getPlanForItem(item).getSystemProduct().getSystemProductType()
+                        && hasGovernmentSubsidy(item)) {
+                    BigDecimal subsidyNett = BigDecimal.ZERO;
+                    for (IItem subitem : item.getItems()) {
+                        if (subitem.getFinancialItemHolder().getFinancialItem().getEffectOnFunding() == EffectOnFundingType.VALUE_REDUCED_FROM_PARENT) {
+                            subsidyNett = subsidyNett.add(subitem.getNettCost());
+                        }
+                    }
+
+                    BigDecimal nettMinusDeposit = item.getNettCost().subtract(item.getDepositValue());
+                    BigDecimal totalNettMinusDeposit = nettMinusDeposit.add(subsidyNett); //subsidy is negative nett value
+                    if (BDMath.isStrictlyPositive(item.getNettCost()) // Asset has positive nett value
+                            && (totalNettMinusDeposit.compareTo(BigDecimal.ZERO) <= 0 && subsidyNett.compareTo(BigDecimal.ZERO) != 0)) { //The expected total when calculated is (Total - deposit - subsidy) is above 0
+                        rejectFleetFundingAmountError(item, ex, ScheduleType.COLLECT_NETT, totalNettMinusDeposit);
+                    }
+                }
+            }
+```
+The last if statement for doing the required checks that were proposed in the Acceptance criteria. 
+Otherwise, changes were made to all if statements looking for `VALUE_ADDED_TO_PARENT` by checking if `getEffectOnFunding().affectsParent()` which was a method added in the enum.
+
+### Testing
+No tests for/no relative tests for VALUE_ADDED_TO_PARENT:
+- `LoanAddItemController` 
+- `FinancialItemDetailsController`
+- `BusinessProcessButtonUtils` (no relative tests for VALUE_ADDED_TO_PARENT)
+- `CommercialLoanSearchController` (no relative tests for VALUE_ADDED_TO_PARENT)
+- `LoanAmendController`
+- `InterestAmendController`
+- `ChangeVRMController`
+- `ReversalProcess`
+- `PaymentProcessHandlingValidator`
+- `NewAgreementProcess`
+- `LoanAmendProcess`
+- `ItemStatusProcess`
+- `ItemPaymentUtils`
+- `AgreementBaseBusinessProcess`
+
+
+Tests were there for `VALUE_ADDED_TO_PARENT` in test classes for:
+- `AgreementSearchController` - added new test cases where needed
+- `ItemViewController`
+- `CommercialLoanViewController`
+- `BusinessProcessCommon`
