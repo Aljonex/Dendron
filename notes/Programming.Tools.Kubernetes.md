@@ -2,7 +2,7 @@
 id: hzpowz01h8f3fx6tvawz7kc
 title: Kubernetes
 desc: ''
-updated: 1677058087650
+updated: 1692263383615
 created: 1675855568297
 ---
 ## Kubernetes
@@ -127,7 +127,7 @@ In *Kubernetes* a service is a **REST** object like a Pod, you can `POST` a serv
 Is effectively meant to do the `kubectl port-forward <resource>/<resource-name> <localport>:<containerPort>` legwork, but doesn't for some stupid reason.
 
 ![](pics/deployment-service-ingress-linkup.jpg)
-[[Relation of deployment service and ingress | https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb]]
+[Relation of deployment service and ingress](https://dwdraju.medium.com/how-deployment-service-ingress-are-related-in-their-manifest-a2e553cf0ffb)
 
 Ingress resources MUST always have a controller, with Rancher desktop this defaults to *traefik* [[traefik ingress docs | https://doc.traefik.io/traefik/providers/kubernetes-ingress/]]
 

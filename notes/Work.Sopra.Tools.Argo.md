@@ -1,7 +1,9 @@
 ---
 id: 5dmvg7mnnkltzrvzih72xk1
 title: Argo
-desc: 'Objective to create a moodle page for Argo that future trainees can go through to learn about it'
+desc: >-
+  Objective to create a moodle page for Argo that future trainees can go through
+  to learn about it
 updated: 1678108815074
 created: 1675855409245
 ---

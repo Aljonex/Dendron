@@ -1,7 +1,9 @@
 ---
 id: 15sopr2wz6k14mvd5velitu
 title: Training Tutorial
-desc: 'A draft for the training tutorial for Argo based on having completed the prerequisite '
+desc: >-
+  A draft for the training tutorial for Argo based on having completed the
+  prerequisite 
 updated: 1678115714965
 created: 1678095033589
 ---

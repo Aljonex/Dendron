@@ -2,7 +2,7 @@
 id: 1uv9qxqo1jj3lg86rgvjy18
 title: Brags
 desc: 'To use if needs be for leveraging more pay'
-updated: 1689941845512
+updated: 1695293758659
 created: 1679500925910
 ---
 
@@ -20,3 +20,9 @@ created: 1679500925910
 - Helped with 3 interviews
 - Core part of Fleet
 - Leading standups
+- Finish complex piece for the fleet project involving implementation of a new additional item which meant getting in and editing 35 files in the core system and making model changes, and trying to get this new cog into the monolith without causing errors so extensive testing was also required
+- Following this completed a piece for addition of Upfront Invoices being output involving the addition of this to the system and model so that it could be used across HOB
+- Started code reviewing to build up portfolio of 8.47 code reviews
+- Hosted knowledge sharing session on Kibana with Arpit for Noida Devs and then 2 groups of BAs (CRM and someone else)
+
+When coming into the meeting don't necessarily talk about goals but how I've progressed towards goals, i.e. have done X code reviews in preparation to submit my portfolio to be a signed off code reviewer, have completed Y interviews as a helper to help prepare to get signed off as a level 1 interviewer

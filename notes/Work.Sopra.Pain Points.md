@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1687250924609
+updated: 1695295518231
 created: 1679309795074
 ---
 
@@ -74,6 +74,29 @@ There's a recovery tool that allows running of single EOD jobs.
 - Update project structure to default to Java 17
     - Make sure modules are using Java 17
     - Update SDK to Java 17
+
+### SX-65619 and SX-65934 (to do with ItemPaymentUtils#negateIfValueReduced)
+- Some tests failed due to not being able to call `getFIHolder().getFinancialItem().getEffectOnFunding()`, there are no times when an item won't have a financialItemHolder and therefore financialItem so the data in the tests is wrong, fixing this is the solution, if with a spy then `doReturn().when()` or simply by making a helper method i.e. `InvoiceMergeTest#createChildItemWithEffectOnFunding()`
+```java
+private IItem createChildItemWithEffectOnFunding(ItemType type, BigDecimal nettCost, BigDecimal vatCost, EffectOnFundingType effectOnFundingType) {
+        IItem item = createItem(type, nettCost, vatCost);
+        IFinancialItem financialItem = new FinancialItemBuilder()
+                .withEffectOnFundingType(effectOnFundingType).build();
+        item.setFinancialItemHolder(new FIHolderBuilder().withFinancialItem(financialItem).build());
+        return item;
+    }
+
+    private IItem createItem(ItemType type, BigDecimal nettCost, BigDecimal vatCost) {
+        IItem item = new Item();
+        item.setItemType(type);
+        item.setNettCost(nettCost);
+        item.setVatCost(vatCost);
+        item.setItemCost(nettCost.add(vatCost));
+        item.setTaxQualifying(true);
+        item.setItemCategory(ITEM_CATEGORY);
+        return item;
+    }
+```
 
 
 ### Useful Shortcuts Intellij

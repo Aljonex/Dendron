@@ -1,7 +1,9 @@
 ---
 id: pjtqhn7avgik4z9srh9html
 title: Prerequisites to Argo Tutorial
-desc: 'A documennt covering the prerequisite tutorials and everything good and bad about them and the volume spread across moodle and confluence'
+desc: >-
+  A documennt covering the prerequisite tutorials and everything good and bad
+  about them and the volume spread across moodle and confluence
 updated: 1677684406296
 created: 1677668838389
 ---

@@ -2,7 +2,7 @@
 id: bg83pzso5furhv19gh6rk21
 title: WFS-model
 desc: ''
-updated: 1688468999197
+updated: 1692195012473
 created: 1682414261141
 ---
 ## Remove HQL from model SX-65093
@@ -16,7 +16,7 @@ Usually follow the below steps but for this as a test fails you just merge it wh
 
 When building just on `WFS Model Release Multibranch -> <branch>` I could also get the new tag from
 ```
-2023-06-29 10:00:38.637   - [deleted]         support/55.0.2/release/55.0.2.163
+2023-06-29 10:00:38.6#37   - [deleted]         support/55.0.2/release/55.0.2.163
 2023-06-29 10:00:38.637   * [new tag]         55.0.2.163 -> 55.0.2.163
 ```
 
