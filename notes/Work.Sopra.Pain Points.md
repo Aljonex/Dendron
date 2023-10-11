@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1695295518231
+updated: 1697012291117
 created: 1679309795074
 ---
 
@@ -41,6 +41,11 @@ https://confluence.apak.com/live/pages/viewpage.action?spaceKey=WIKI&title=Accep
 
 ### Day end jobs
 There's a recovery tool that allows running of single EOD jobs.
+
+
+### Restarting cloud env
+- In Argo they have been split up via repo, so find the repo first and then you'll see the pods etc
+- [Use this flow chart](https://confluence.apak.com/live/pages/viewpage.action?pageId=105243108)
 
 ### Upgrade to Java 17
 - Download java 17 coretto

@@ -2,7 +2,7 @@
 id: 79is3g8ias18k3ldsfd54r0
 title: Fleet
 desc: 'A file for knowledge on stuff to do with Fleet/Johto project'
-updated: 1693997879456
+updated: 1697013762783
 created: 1686919376670
 ---
 # Basics
@@ -94,14 +94,7 @@ In the UI go select a Dealing company and use `Administration -> Plan Configurat
 - `FinanceProductDetailsController` - UI Controller for viewing and editing finance products
 
 
-## ETPS-2583 Add Fleet Finance Product to ModelWorld (SX-65481)
-Useful files
-- `pppExtract.xml` - where the data gets loaded into db during `FeatureTestsRunner.runFeatureTests()`
-- `AutoMigrateService.java` where `#exportDcZip()` hides for exporting the modelworld data for the given env
-
-Tim suggested making use of the ScriptRunner, so to do this I wanted to first test locally. 
-What I hadn't realised is that the ScriptRunner runs on *Groovy* scripts, which are effectively Java code.
-I found on confluence an example of a groovy script and pieced together my own after reading through the `AutoMigrateService#exportDcZip()` code and landed with:
+## Adding fleet finance product via scripts
 ```Java
 import com.apakgroup.systemx.controllers.automigrate.AutoMigrateService;
 import com.apakgroup.systemx.dao.org.OrganisationDAO;
@@ -110,8 +103,9 @@ import java.io.File;
 
 AutoMigrateService autoMigrateService = context.getBean("autoMigrateService");
 File file = new File("C:\\temp\\migration-data\\exportZip.zip");
-autoMigrateService.exportDcZip( file, 12658, null, true, true, "8.47.499", null, null);
+autoMigrateService.exportDcZip( file, 12810, null, true, true, "wfs", null, null);
 ```
+**THIS IS THE SCRIPT TO SAVE A ZIP FILE LOCALLY**
 
 Tim pointed me to this [useful test](https://bitbucket.apak.delivery/projects/WFS/repos/wfs/browse/wfs-core/test/com/apakgroup/systemx/controllers/automigrate/AutoMigrateServiceIT.java?at=support%2F8.55%2Fdev#92) (only used on 8.55 hence not being able to see it on 8.47) so that I could potentially make a script to output my plan.xml.
 
@@ -126,7 +120,7 @@ import org.apache.commons.io.FileUtils;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import java.util.zip.ZipFile;
-import org.apache.commons.io.IOUtils
+import org.apache.commons.io.IOUtils;
 
 import com.apakgroup.systemx.controllers.automigrate.AutoMigrateService;
 import com.apakgroup.wfs.base.util.FileUtil;
@@ -140,17 +134,24 @@ autoMigrateService.exportDcZip( exportZipFile, 12755, null, true, false, "wfs", 
 FacesContext facesContext = FacesContext.getCurrentInstance();
 HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 response.setContentType("text/xml");
-response.setHeader("Content-Disposition",
-		"plan.xml");
+response.setHeader("Content-Disposition","plan.xml");
 OutputStream output = response.getOutputStream();
 //Read zip as input stream using zip entry
 ZipFile zipFile = new ZipFile(exportZipFile.getPath());
-String fileName = "plan.xml"
+String fileName = "plan.xml";
 IOUtils.copy(zipFile.getInputStream(zipFile.getEntry(fileName)), output);
 
 
 FacesContext.getCurrentInstance().responseComplete();
 ```
+## ETPS-2583 Add Fleet Finance Product to ModelWorld (SX-65481)
+Useful files
+- `pppExtract.xml` - where the data gets loaded into db during `FeatureTestsRunner.runFeatureTests()`
+- `AutoMigrateService.java` where `#exportDcZip()` hides for exporting the modelworld data for the given env
+
+Tim suggested making use of the ScriptRunner, so to do this I wanted to first test locally. 
+What I hadn't realised is that the ScriptRunner runs on *Groovy* scripts, which are effectively Java code.
+I found on confluence an example of a groovy script and pieced together my own after reading through the `AutoMigrateService#exportDcZip()` code and landed with:
 This script worked locally. It then also worked on the cloud env.
 The first 3 lines came from Tim's useful test he sent me, the `12755` came from making use of `select * from organisation where dtype='DealingCompany'` in the `SQLRunner` to find the id of the Dealing Company.
 ZipFile things came from google searching and a chat with Tim around [this test of zip parsing of ageing data](https://bitbucket.apak.delivery/projects/WFSU/repos/wfs-ageing-test-framework/pull-requests/132/diff#wfs-ageing/src/main/java/com/apakgroup/wfs/modelworld/util/AgeingFileUtil.java?t=13).
@@ -198,3 +199,50 @@ public URI storeReport(IReportQueueEntry entry, InputStream contents) throws IOE
 
 In the end I had to override the `pppExtract` and `miscExtract` xmls, in `wfs-core/resources/configuration/mw_lite_configuration/DC_1/platinum_data` with ones extracted from the sandbox test env, which had a combination of normal model world and fleet data loaded, then work out some kinks of copies, had to add both as `miscExtract` deals with new ItemDescriptors and `pppExtract` deals with everything Product, Profiles, and Plans related.
 
+### Coming Back on 10/10
+Attempting to run this in the cloud:
+```Java
+import java.io.File;  
+import org.apache.commons.io.FileUtils;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import java.util.zip.ZipFile;
+import org.apache.commons.io.IOUtils;
+
+import com.apakgroup.systemx.controllers.automigrate.AutoMigrateService;
+import com.apakgroup.wfs.base.util.FileUtil;
+
+Set<String> constituentFileSet = new HashSet<String>();
+constituentFileSet.add("plan");
+File exportZipFile = new File(FileUtil.getTempDir() + "TEST" + "export.zip");
+AutoMigrateService autoMigrateService = context.getBean("autoMigrateService");
+autoMigrateService.exportDcZip( exportZipFile, 12755, null, true, false, "wfs", "test", null);
+
+FacesContext facesContext = FacesContext.getCurrentInstance();
+HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+response.setContentType("text/xml");
+response.setHeader("Content-Disposition",
+		"plan.xml");
+OutputStream output = response.getOutputStream();
+//Read zip as input stream using zip entry
+ZipFile zipFile = new ZipFile(exportZipFile.getPath());
+for (ZipFile entry : zipFile.entries()) {
+  String fileName = entry.getName();
+  IOUtils.copy(zipFile.getInputStream(zipFile.getEntry(fileName)), output);
+}
+
+
+FacesContext.getCurrentInstance().responseComplete();
+```
+
+Used this locally to export the zip
+```java
+import com.apakgroup.systemx.controllers.automigrate.AutoMigrateService;
+import com.apakgroup.systemx.dao.org.OrganisationDAO;
+import com.apakgroup.systemx.model.api.org.IDealingCompany;
+import java.io.File;  
+
+AutoMigrateService autoMigrateService = context.getBean("autoMigrateService");
+File file = new File("C:\\temp\\migration-data\\exportZip3.zip");
+autoMigrateService.exportDcZip( file, 12810, null, true, true, "wfs", null, null);
+```
