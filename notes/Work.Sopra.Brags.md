@@ -2,7 +2,7 @@
 id: 1uv9qxqo1jj3lg86rgvjy18
 title: Brags
 desc: 'To use if needs be for leveraging more pay'
-updated: 1695293758659
+updated: 1697032782063
 created: 1679500925910
 ---
 
@@ -26,3 +26,9 @@ created: 1679500925910
 - Hosted knowledge sharing session on Kibana with Arpit for Noida Devs and then 2 groups of BAs (CRM and someone else)
 
 When coming into the meeting don't necessarily talk about goals but how I've progressed towards goals, i.e. have done X code reviews in preparation to submit my portfolio to be a signed off code reviewer, have completed Y interviews as a helper to help prepare to get signed off as a level 1 interviewer
+
+
+### How to hit superior to expectations
+- Pick up 2 or 3 extra curriculars
+- Read Spring/springboot, hibernate, and underlying systems
+- Look into reflection in Java and base of Java

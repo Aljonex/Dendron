@@ -2,7 +2,7 @@
 id: g8sbqknj1ld5fy997b4559b
 title: SX-66354 Update Model Worl
 desc: ''
-updated: 1697013840686
+updated: 1697196306569
 created: 1697013561790
 ---
 Making use of the scripts found in: ![[Work.Sopra.Fleet#adding-fleet-finance-product-via-scripts]]
@@ -46,3 +46,6 @@ But got 11 errors for the export of plan, when viewing this in kibana I realised
 `MigrationException 11 errors occurred in export - see logged ERROR entries for details`
 
 This was better than when I had `currentRevisionsOnly, omitDeleted` both set to `false`, as I got over 2000 errors probably due to cached data.
+
+
+**THERE IS A PAGE IN THE UI AT TOP LEVEL THAT HAS BEEN RE-ADDED UNDER SYSTEM ADMIN -> LOAD DELETE DEALING COMPANIES WHERE I CAN DO WHAT MY SCRIPT DID**
