@@ -2,7 +2,7 @@
 id: t5tok8saxd76anl8a7r2bsq
 title: Performance
 desc: ''
-updated: 1686751439561
+updated: 1699897302161
 created: 1683630761473
 ---
 # SX-65126
@@ -731,3 +731,26 @@ To re-run locally go `Project Structure -> Project` and change back to java 11 s
 
 `<cloud-env-name>.apak.delivery/WFS/systemMonitor.faces`
 ![](2023-06-13-14-50-42.png)
+
+### Script to remove null `effectOnFunding`
+On 9th of August I brought in a model change to `FinancialItem` that upon creation gives a default `EffectOnFunding` value of 'NONE'.
+However, some envs are using data from before that, to change this I used a script:
+```java
+sqlStr = """ 
+        update financialitem set effectonfunding ='NONE' where id in ( select fi2.id from financialitem fi2 where effectonfunding is null);
+    """;
+dao = context.getBean('agreementDAO'); 
+rows = dao.sessionFactory.getCurrentSession().createSQLQuery(sqlStr); 
+rows.executeUpdate();
+return "Script finished: ${rows} Any entities with null effectOnFunding have been set to none";
+```
+
+I updated a value in PGAdmin with these executed sequentially:
+```SQL
+update "SYSX_USER2".financialitem set effectonfunding=null where id=14900;
+
+commit;
+
+select * from "SYSX_USER2".financialitem where effectonfunding is null;
+```
+I knew this was right by checking the `local.conf` and it said I was using SYSX_USER2.

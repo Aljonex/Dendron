@@ -2,7 +2,7 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1694175241721
+updated: 1702572262399
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
@@ -51,6 +51,15 @@ Hopefully this will remove some of the pressure on the testers to keep up with t
 ### When closing
 **Commit** - every version where code relating to the ticket has been committed, check this on [line 333](https://bitbucket.apak.delivery/projects/WFS/repos/wfs/browse/pom.xml?at=refs%2Fheads%2Fsupport%2F8.47%2Fdev)
 
+### From patrick
+the way you can check is the merge commit that was raised from your pull request merge
+![Commit tag](image-4.png)
+which tag version it sits under(8.47.602)
+
+### Fixing forward
+If fixing a stability branch, apply fix to all stability branches above and then HoB i.e.
+`support/8.47.388/dev -> support/8.47.578/dev -> support/8.47/dev`
+
 **Fix Version** - version where ticket was fixed/merged, should always be 2 (the branch and a specific version which is the latest commit), to find the version go to `8.47/dev` and go to the wfs-core and find the *SNAPSHOT* version from the POM.
 
 **Fix Strategy and Risk Assessment** - If this was to break something in production then how would it be fixed? In Risk Assessment outline the risks and what they would cause and then how to monitor that (i.e. added logging to monitor the job)
@@ -92,3 +101,9 @@ Edit the ETPS ticket issue to see everything needed, click create:
 4. Update model version in wfs branch from the Build in jenkins then merge.
 
 [Model Changes](https://confluence.apak.com/live/pages/viewpage.action?pageId=29145650)
+
+
+### Merging ticket to next part of branch
+- More > Clone ticket and rename to `MERGE of <ticketname>`
+- Go into issue links and add a `Merge of <oldSx>` type and delete cloned from
+- Then you can push changes on that other branch

@@ -2,7 +2,7 @@
 id: 443pb7j75wr9jo9dg27d0ww
 title: WebUI
 desc: ''
-updated: 1687522408393
+updated: 1702570377376
 created: 1686730623670
 ---
 ## ETPS-1785 More actions scrolls
@@ -92,3 +92,88 @@ public boolean isGeneralSettingsReadOnly() {
                 UserRight.EDIT_DEALERS_GENERAL_SETTING));
     }
 ```
+
+
+### My `local.conf` setup
+```
+wfs {
+     core {
+     env.development=true
+     logLevel = "DEBUG"
+
+        # Postgres settings
+        application.database.profile = "postgres"
+        uiReskin.availableStylingOptions = ["ORIGINAL", "MATERIAL"]
+        application.jdbc.postgres {
+          username=SYSX_USER
+          url="jdbc:postgresql://localhost:5432/"
+          schema {
+            partitions = [
+              {
+                # Default username comes from postgres profile (above)
+                partition = "1"
+              }
+            ]
+            defaultPartition="1"
+          }
+        }
+        migration.flyway {
+          locations = "db/migration/postgresql, db/migration/common"
+          nonPartitionLocations = "db/common_data/migration/postgresql, db/common_data/migration/common"
+          createcommonhibernatesequence = false
+          #auto = false
+        }
+#         application.hibernate.show_sql=true
+     	#translations.enabled = false
+         application {
+             jdbc {
+                oracle {
+                	url="jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA = (service_name =xepdb1)))"
+                  	schema {
+		                entitySpaceMultiplier=1
+		                partitions=[
+		                    {
+		                        partition="1"
+		                    }
+		                ]
+		                defaultPartition="1"
+		            }
+
+                 }
+                 global.url = ${application.jdbc.oracle.url}
+                 //profile=oracle
+             }
+         }
+         oauth.custom.users = [                {
+                clientId="PasswordUser"
+                secret="{noop}TestSecret1"
+                grantTypes="password,refresh_token"
+                authorities="SCOPE_wfsv6.io/rest,ROLE_ACCESS_REST_API"
+                accessTokenValidity = 600000
+                refreshTokenValidity = 600000
+                scopes="wfsv6.io/rest"
+            }
+        ]
+     }
+}
+```
+This was for the addition of the UI reskin, also have to run `yarn install` then `yarn build` in target WFS-UI folder.
+`yarn install` gets grunt, webpack and a few other dependencies, `yarn build` builds it
+
+
+### Brian's tips
+- `Alt+F1` (Intellij) for finding location of file
+- Click file (bundled one) and `F5` which refactors and copies and move to the `target > exploded war > css > brandings > md` after `yarn webpack` and refresh UI
+- Also `Ctrl + shift + C` (in dev tools in chrome [`F12`]) lets you manually inspect and click element to find
+- Expand and can double click text to edit or drag out and see styles also to add new styling rule, then you can copy and paste
+```css
+
+tbody#mainForm\:alerts\:tbody_element {
+    text-wrap: pretty;
+}
+```
+i.e. I pasted this into the alertStyling.css
+
+
+### Toggle Styling on cloud env
+- Enable UserRight toggle UI styling on the departments, save it log out and reenter
