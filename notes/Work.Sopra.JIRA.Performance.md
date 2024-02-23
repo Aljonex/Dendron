@@ -2,7 +2,7 @@
 id: t5tok8saxd76anl8a7r2bsq
 title: Performance
 desc: ''
-updated: 1699897302161
+updated: 1704273544792
 created: 1683630761473
 ---
 # SX-65126
@@ -654,6 +654,28 @@ return output;
 The heaviest for `stockMovementsOnDate` seems to occur because of the `financialItem` table, so I've been reading this link [sql index considerations](https://www.sqlshack.com/top-five-considerations-for-sql-server-index-design/) to understand how to create an index that will be most helpful in cutting down the time.
 
 To get a new index thought about by the system you have to run the end of day `vacuumanalysis` which will need to be activated.
+
+
+More example scripts
+```java
+sql = """
+CREATE INDEX idx_glTran_nominal ON gltransaction USING btree (nominal)
+
+"""
+
+dao = context.getBean('agreementDAO');
+return dao.sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
+
+
+
+
+sql = """
+DROP INDEX idx_glTran_nominal;
+"""
+
+dao = context.getBean('agreementDAO');
+return dao.sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
+```
 
 ### Matthew Ellams approach to similar problems
 In this case my approach to finding the problem was roughly:

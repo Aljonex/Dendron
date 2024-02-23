@@ -2,7 +2,7 @@
 id: yo8diksbabv7mtibxeuuswc
 title: Pain Points
 desc: ''
-updated: 1701771377388
+updated: 1704293833232
 created: 1679309795074
 ---
 
@@ -277,3 +277,20 @@ To deploy your web app, navigate to the new wfs_388 directory under scripts in y
 ### For Argo
 - EU-west is just argo.apak.delivery
 - For other envs, `argo-<env (i.e. ap-southeast-4).apak.delivery`
+
+### Resetting ADMINPFC password
+Local reset of ADMINPFC password:
+[Confluence - in Oracle though, convert to PSQL](https://confluence.apak.com/live/pages/viewpage.action?spaceKey=WIKI&title=Useful+SQL)
+```sql
+UPDATE "<dbName>".SEC_IDENTITY
+SET password           = 'd67a8a4c1dabb60bff0dba97ba5a2598397898f3ecb5f5e5842bc7225168082b',
+  salt                 = 'W5-X|lf5FJMTchWV',
+  passwordchange       = current_date,
+  enabled              =true,
+  credentialsnonexpired=true,
+  nonlocked            =true,
+  loginFailures        =0,
+  HASHTYPE             = 'X2'
+WHERE name             = 'ADMINPFC';
+commit;
+```
