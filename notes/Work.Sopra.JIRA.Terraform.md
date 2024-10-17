@@ -184,7 +184,7 @@ pvcs:
       - cd ${CODEBUILD_SRC_DIR}
       # Retrieve Bitbucket SSH key for TF Modules 
       # and a Vault Token (which will auto renew if it expires) 
-      - nohup python ./scripts/vault-auth.py --ssh --renew --leeway-percent=10 --role codebuild-privileged-role &
+      - nohup python ./scripts/vault-auth.py --
       - python ./scripts/vault-auth.py --wait # wait for the call above to complete
       - terraform init
       - terraform import module.restored-efs.aws_efs_file_system.efs-fs fs-0ae02ed2e771b4075

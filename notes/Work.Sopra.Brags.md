@@ -1,7 +1,7 @@
 ---
 id: 1uv9qxqo1jj3lg86rgvjy18
 title: Brags
-desc: 'To use if needs be for leveraging more pay'
+desc: To use if needs be for leveraging more pay
 updated: 1697032782063
 created: 1679500925910
 ---

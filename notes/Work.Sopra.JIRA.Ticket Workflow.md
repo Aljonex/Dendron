@@ -2,7 +2,7 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1702572262399
+updated: 1726590925190
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
@@ -48,7 +48,27 @@ So what I am proposing is changing the flow to:
 Hopefully this will remove some of the pressure on the testers to keep up with the head of branch releases, and with the additional exploratory testing time end up increasing the coverage of testing we can do. 
 
 ## 8.47 
+### Testing
+So there are some changes coming to the branch with regards to the testing approach.  In short developers are going to be much more responsible for the testing of their tickets, while the testers will be focusing more on running the regression testing.
+ 
+We are going to phase this in for NEW tickets for the bulk of the changes. Anything in flight will probably continue as normal for the most part. This is to take effect immediately. 
+ 
+From now on, when picking up a new ETPS ticket from the backlog your initial task will be the usual of reading through to understand it, maybe debug a little, to get to grips with the task, and then contact the Testers.  Together you will go over the ticket, discuss what changes you are planning, and the AC to ensure that they are fit for purpose, and for the testers to have the opportunity to add any key regression scenarios in which need to be tested as part of the ticket.  At this point you should be able to estimate the ticket relatively accurately.  If however the addition to the AC means a major change in the timeline, please reach out to one of us.
+ 
+After that point the next change will be the Demo.  Instead of the current process where every ticket must be demoed to a tester, instead only the Criticals, Gaps and one with a large amount of AC will require a tester to be present.  For all of the rest just grab another Dev for a quick demo as a second pair of eyes. Add a comment to the ticket about who you demoed the work to.
+ 
+Finally when it comes to the sanity testing, you will be responsible for doing this as usual, however, instead of moving the ticket to Internal Test and leaving it, you will need to complete the transition flow, "Internal Test" -> "External UAT" -> Closed. We aren't expecting a testing doc at this point, you will have already done the Dev evidence, but it will need a comment on the ticket detailing which wfs environment, version and dataset you did the testing on, as well as anything omitted from the testing (ie its covered heavily by automated tests etc) and any issues discovered.
+ 
+This change will be heavily moving the responsibility of the changes in to the hands of developers, there will be no "safety net" of testers checking after. So please pay attention to detail and do what you can to keep quality high.
+ 
+If you have any questions please reach out.
+
 ### When closing
+The Fix Version field must be updated to include 2 things, the target branch  (e.g. Branch 8.47) and the next version for the target branch (e.g 8.47.726) in which the changes have been merged in. To add a bit more context to this the target branch should be present from the get go on the jira and you'll need this in order to pass the quality gate checks on bitbucket.
+
+However, the next version for the branch(e.g 8.47.726) should only be added to the fix version entry when the pull request is merged!
+The Commit Version field should be updated to include any versions where work has been committed to for this issue. For example, when a JIRA is completed for the first time it may have 8.47.725. If it is reopened and completed again this field might say 8.47.725, 8.47.726.
+
 **Commit** - every version where code relating to the ticket has been committed, check this on [line 333](https://bitbucket.apak.delivery/projects/WFS/repos/wfs/browse/pom.xml?at=refs%2Fheads%2Fsupport%2F8.47%2Fdev)
 
 ### From patrick

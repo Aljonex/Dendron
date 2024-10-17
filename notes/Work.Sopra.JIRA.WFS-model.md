@@ -2,7 +2,7 @@
 id: bg83pzso5furhv19gh6rk21
 title: WFS-model
 desc: ''
-updated: 1692195012473
+updated: 1724153364866
 created: 1682414261141
 ---
 ## Remove HQL from model SX-65093
@@ -31,3 +31,73 @@ When building just on `WFS Model Release Multibranch -> <branch>` I could also g
 #### FLYWAY
 Extends DevOps to your databases to accelerate software delivery and ensure quality code. 
 It builds on application delivery processes to automate database deployments.
+
+- Java files can be modified as have no associated checksum
+- If changing an sql file you need to add a recovery step
+- With new breakout of model now you have to be aware that `flyway.conf` and `flyway.xml` have changed, look at `PartitionAwareFlyway` to see running order but basically the steps run as `Recovery -> Main -> Data Update -> Schema Deletion` and to be able to delete a step and have it readded you need to set `Schema Deletion.disabled` to true in flyway.conf as such:
+```conf
+wfs {
+  flyway {
+	migration.flyway {
+	;   locations = "db/migration/oracle, db/migration/common"
+	;   nonPartitionLocations = "db/common_data/migration/oracle, db/common_data/migration/common"
+	;   auto = true
+	;   repair = false
+	;   purge = false
+	;   createhibernatesequences = false
+	;   createcommonhibernatesequence = true
+	;   outoforder = true
+    ;   dataUpdate {
+    ;     auto = true
+    ;     locations = "flyway/data/oracle, com/apakgroup/flyway/data/common"
+    ;   }
+      schemaDeletion {
+        disabled=true
+        ; auto = false
+        ; locations = "flyway/schemaDeletion/oracle"
+      }
+    ;   recovery {
+    ;     disabled = false
+    ;     auto = true
+    ;     locations = "flyway/recovery/oracle"
+    ;   }
+    ; }
+	; internalaccountcreation {
+	;   initialautocreatecreditline = false
+	; }
+  }
+}
+```
+As this links to here in PartitionAwareFlyway:
+```java
+public void autoMigrate() throws Exception {
+         if(!(repairOn || purgeOn || autoMigrateOn) || hardDisabled){
+            LOGGER.info("Skipping automigration for {} ({}, {}, {}, {})", beanName, repairOn, purgeOn, autoMigrateOn,
+                    hardDisabled);
+            return;
+        }
+        LOGGER.info("Auto Migration Triggered for partitions {}", partitionConfiguration.partitionSet());
+        String oldPartition = PartitionContextHolder.getPartition();
+        for (String partition : partitionConfiguration.partitionSet()) {
+            List<Callback> actualCallbacks = new ArrayList<>(callbacks);
+            if (purgeOn) {
+                if (!repairOn) {
+                    LOGGER.warn("Purge enabled but repair disabled - this results in no actual invocations");
+                }
+                actualCallbacks.add(new FlywayPurgeCallback(locations));
+            }
+            if (autoMigrateOn) {
+                actualCallbacks.add(new HibernateSequenceCallback(rdbms, dialect, partitionConfiguration));
+            }
+
+            Flyway flyway = createFlyway(partition, actualCallbacks);
+            if (repairOn) {
+                LOGGER.info("Triggering Flyway Repair for partition {}", partition);
+                flyway.repair();
+            }
+            if (autoMigrateOn) {
+                LOGGER.info("Triggering Flyway Migration for partition {}", partition);
+                flyway.migrate();
+            }
+        }
+```
