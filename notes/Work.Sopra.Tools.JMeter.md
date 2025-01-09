@@ -2,7 +2,7 @@
 id: g0ywhnbgsjfub6u0vruf9s9
 title: JMete
 desc: ''
-updated: 1731487681440
+updated: 1731493537562
 created: 1731420744744
 ---
 ## JMeter Loan state machine
@@ -25,7 +25,7 @@ SELECT * FROM item where identification= 'FEEDLOADNEWLOAN11'
 UPDATE item SET reference = '100237' WHERE identification='FEEDLOADNEWLOAN11' AND itemtype='INVOICE'
 ```
 Ran the first to find it, then the second to update it.
-That **OR** use `modelWorldLiteRunner` as this just does orgs, creditlines and plans, no loans.
+That **OR** use `modelWorldLiteRunner` as this just does orgs, creditlines and plans, no loans. Quick edit
 
 ### My Specific problem set
 I wanted to be able to create loans across different plans that some had:

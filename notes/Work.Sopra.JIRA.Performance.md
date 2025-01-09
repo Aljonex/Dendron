@@ -579,16 +579,8 @@ GroupAggregate  (cost=4521.86..37869.54 rows=2 width=112)
 ### Resolution 
 - After having found out that through the use of Chris' groovy/java query on the Script Runner on the cloud env:
 ```
-sqlStr = """ 
-	EXPLAIN (<SQLQUERY>)
-	""";
-dao = context.getBean('agreementDAO'); 
-rows = dao.sessionFactory.getCurrentSession().createSQLQuery(sqlStr).list(); 
-output = ""; 
-for(String row: rows){ 
-	output += row; logger.info(row); 
-} 
-return output;
+
+
 ```
 I found some explain plans, then copy and pasting these into notepad++ and reformatting by replacing all ")" with ")\n" it seemed I needed to check what the indexes were on heavy tables, indexes being a combination of columns (with low cardinality or variability) so that data can be retrieved more efficiently.
 - To find the indexes of given tables I went into the SQL runner and used the query
