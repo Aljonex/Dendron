@@ -2,12 +2,12 @@
 id: dszm9d9r52kelazj3s8lujf
 title: Code reviewing
 desc: ''
-updated: 1728914812014
+updated: 1736509613655
 created: 1728914723260
 ---
 ### Checklist
 
-### Aaron's way with big PRs
+### Aaron's way with big PRs (aaron)
 1) Check out the branch you're reviewing
 2) git log to find the commit reference prior to any changes made on the branch
  ![alt text](image-5.png)

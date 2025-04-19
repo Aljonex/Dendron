@@ -2,7 +2,7 @@
 id: 0jkpyfo53sfvx80ry4vzsp6
 title: Ticket Workflow
 desc: ''
-updated: 1726590925190
+updated: 1738759522536
 created: 1678965369339
 ---
 [Jira Workflow confluence](https://confluence.apak.com/live/display/WIKI/JIRA#JIRA-SXIssues)
@@ -114,7 +114,7 @@ Edit the ETPS ticket issue to see everything needed, click create:
 6. No sprint or epic link
 7. Link the ticket with SX ticket made and ETPS ticket
 
-### [Merging WMOD ticket](https://confluence.apak.com/live/pages/viewpage.action?pageId=29145650)
+### [Merging WMOD ticket](https://sf-wiki.atlassian.net/wiki/spaces/WIKI/pages/41276191/How+to+Make+Model+Changes+WFS+8.x+Branches)
 1. Model updates -> Model PR up -> Build model PR in jenkins (`WFS Model Feature branch build` in Jenkins, scan multibranch pipeline now, find feature branch) -> Note build version
 2. Wfs branch -> insert new model version in POM.xml file -> raise PR, run build to check if works
 3. If works -> Merge model PR -> build release version of model -> Note release build version
